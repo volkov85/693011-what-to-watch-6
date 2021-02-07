@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MainScreen from "../main-screen/main-screen";
+import MainPage from "../main-page/main-page";
 
 const App = ({title, genre, year, titles}) => {
   return (
-    <MainScreen
+    <MainPage
       title = {title}
       genre = {genre}
       year = {year}
