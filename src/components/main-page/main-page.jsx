@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MovieCard from "../movie-card/movie-card";
 
-const MainScreen = ({title, genre, year, titles}) => {
+const MainPage = ({title, genre, year, titles}) => {
   return (
     <>
       <section className="movie-card">
@@ -125,11 +125,11 @@ const MainScreen = ({title, genre, year, titles}) => {
   );
 };
 
-MainScreen.propTypes = {
+MainPage.propTypes = {
   title: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   year: PropTypes.string.isRequired,
   titles: PropTypes.array.isRequired
 };
 
-export default MainScreen;
+export default MainPage;
