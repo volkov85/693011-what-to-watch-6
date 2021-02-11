@@ -1,24 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import MainPage from "../main-page/main-page";
-import AddReviewPage from "../add-review-page/add-review-page";
-import MoviePage from "../movie-page/movie-page";
-import MyList from "../mylist-page/mylist-page";
-import PlayerPage from "../player-page/player-page";
-import SignInPage from "../sign-in-page/sign-in-page";
-import NotFoundPage from "../not-found-page/not-found-page";
+import MainPage from '../main-page/main-page';
+import AddReviewPage from '../add-review-page/add-review-page';
+import MoviePage from '../movie-page/movie-page';
+import MyList from '../mylist-page/mylist-page';
+import PlayerPage from '../player-page/player-page';
+import SignInPage from '../sign-in-page/sign-in-page';
+import NotFoundPage from '../not-found-page/not-found-page';
 
-const App = ({title, genre, year, titles}) => {
+const App = ({films}) => {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
           <MainPage
-            title = {title}
-            genre = {genre}
-            year = {year}
-            titles = {titles}
+            films = {films}
           />
         </Route>
         <Route exact path="/login">
@@ -45,10 +42,7 @@ const App = ({title, genre, year, titles}) => {
 };
 
 App.propTypes = {
-  title: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired,
-  titles: PropTypes.array.isRequired
+  films: PropTypes.array.isRequired
 };
 
 export default App;

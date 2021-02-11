@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MovieCard from "../movie-card/movie-card";
 
-const MainPage = ({title, genre, year, titles}) => {
+const MainPage = ({films}) => {
   return (
     <>
       <section className="movie-card">
@@ -35,22 +35,22 @@ const MainPage = ({title, genre, year, titles}) => {
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{title}</h2>
+              <h2 className="movie-card__title">{films[0].title}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{year}</span>
+                <span className="movie-card__genre">{films[0].genre}</span>
+                <span className="movie-card__year">{films[0].year}</span>
               </p>
 
               <div className="movie-card__buttons">
                 <button className="btn btn--play movie-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
+                    <use xlinkHref="#play-s"/>
                   </svg>
                   <span>Play</span>
                 </button>
                 <button className="btn btn--list movie-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                    <use xlinkHref="#add"/>
                   </svg>
                   <span>My list</span>
                 </button>
@@ -98,7 +98,7 @@ const MainPage = ({title, genre, year, titles}) => {
 
           <div className="catalog__movies-list">
             {
-              titles.map((item, i) => <MovieCard key={item + i} title={item}/>)
+              films.map((item) => <MovieCard key={item.id} title={item.name}/>)
             }
           </div>
 
@@ -126,10 +126,7 @@ const MainPage = ({title, genre, year, titles}) => {
 };
 
 MainPage.propTypes = {
-  title: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired,
-  titles: PropTypes.array.isRequired
+  films: PropTypes.array.isRequired
 };
 
 export default MainPage;
