@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MovieCard from "../movie-card/movie-card";
+import MovieList from "../movie-list/movie-list";
 
 const MainPage = ({films}) => {
   return (
     <>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+          <img src={films[0].background_image} alt="The Grand Budapest Hotel"/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -31,14 +31,14 @@ const MainPage = ({films}) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src={films[0].poster_image} alt="The Grand Budapest Hotel poster" width="218" height="327"/>
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{films[0].title}</h2>
+              <h2 className="movie-card__title">{films[0].name}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{films[0].genre}</span>
-                <span className="movie-card__year">{films[0].year}</span>
+                <span className="movie-card__year">{films[0].released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -96,11 +96,7 @@ const MainPage = ({films}) => {
             </li>
           </ul>
 
-          <div className="catalog__movies-list">
-            {
-              films.map((item) => <MovieCard key={item.id} title={item.name}/>)
-            }
-          </div>
+          <MovieList films = {films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

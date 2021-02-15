@@ -22,7 +22,9 @@ const App = ({films}) => {
           <SignInPage />
         </Route>
         <Route exact path="/mylist">
-          <MyList />
+          <MyList
+            films = {films}
+          />
         </Route>
         <Route exact path="/films/:id">
           <MoviePage />
@@ -31,7 +33,10 @@ const App = ({films}) => {
           <AddReviewPage />
         </Route>
         <Route exact path="/player/:id">
-          <PlayerPage />
+          <PlayerPage
+            name = {films[0].name}
+            videoLink = {films[0].video_link}
+          />
         </Route>
         <Route>
           <NotFoundPage />
