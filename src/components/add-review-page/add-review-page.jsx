@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import MovieCard from "../movie-card/movie-card";
 
 const AddReviewPage = ({name, backgroundImage, posterImage}) => {
   return (
@@ -25,7 +24,7 @@ const AddReviewPage = ({name, backgroundImage, posterImage}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="movie-page.html" className="breadcrumbs__link">{name}</a>
+                <Link to="/films/:id" className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

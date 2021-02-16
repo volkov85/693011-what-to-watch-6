@@ -39,17 +39,17 @@ const MoviePage = () => {
               <div className="movie-card__buttons">
                 <button className="btn btn--play movie-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
+                    <use xlinkHref="#play-s"/>
                   </svg>
                   <span>Play</span>
                 </button>
                 <button className="btn btn--list movie-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                    <use xlinkHref="#add"/>
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                <Link to="/films/:id/review" className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -97,6 +97,7 @@ const MoviePage = () => {
                 <p className="movie-card__starring"><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe
                   and other</strong></p>
               </div>
+
             </div>
           </div>
         </div>
@@ -112,7 +113,7 @@ const MoviePage = () => {
                 <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175"/>
               </div>
               <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
+                <Link className="small-movie-card__link" to="/films/:id">Fantastic Beasts: The Crimes of Grindelwald</Link>
               </h3>
             </article>
 
@@ -121,7 +122,7 @@ const MoviePage = () => {
                 <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175"/>
               </div>
               <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Bohemian Rhapsody</a>
+                <Link className="small-movie-card__link" to="/films/:id">Bohemian Rhapsody</Link>
               </h3>
             </article>
 
@@ -130,7 +131,7 @@ const MoviePage = () => {
                 <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175"/>
               </div>
               <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Macbeth</a>
+                <Link className="small-movie-card__link" to="/films/:id">Macbeth</Link>
               </h3>
             </article>
 
@@ -139,7 +140,7 @@ const MoviePage = () => {
                 <img src="img/aviator.jpg" alt="Aviator" width="280" height="175"/>
               </div>
               <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Aviator</a>
+                <Link className="small-movie-card__link" to="/films/:id">Aviator</Link>
               </h3>
             </article>
           </div>
