@@ -57,7 +57,7 @@ const AddReviewForm = () => {
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>
-
+          <p>Testing Review State: {review}</p>
         </div>
       </form>
     </>
