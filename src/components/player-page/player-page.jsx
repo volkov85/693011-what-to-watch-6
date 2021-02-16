@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 
 const PlayerPage = ({name, videoLink}) => {
   return (
@@ -35,6 +36,11 @@ const PlayerPage = ({name, videoLink}) => {
       </div>
     </div>
   );
+};
+
+PlayerPage.propTypes = {
+  name: PropTypes.string.isRequired,
+  videoLink: PropTypes.string.isRequired
 };
 
 export default PlayerPage;

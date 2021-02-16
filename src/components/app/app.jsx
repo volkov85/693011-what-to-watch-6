@@ -30,7 +30,11 @@ const App = ({films}) => {
           <MoviePage />
         </Route>
         <Route exact path="/films/:id/review">
-          <AddReviewPage />
+          <AddReviewPage
+            backgroundImage = {films[0].background_image}
+            name = {films[0].name}
+            posterImage = {films[0].poster_image}
+          />
         </Route>
         <Route exact path="/player/:id">
           <PlayerPage

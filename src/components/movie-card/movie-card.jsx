@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 
 const MovieCard = ({id, name, previewImage}) => {
@@ -17,7 +18,7 @@ const MovieCard = ({id, name, previewImage}) => {
         <img src={previewImage} alt={name} width="280" height="175"/>
       </div>
       <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="movie-page.html">{name + ` TestID ` + cardId}</a>
+        <Link to="/films/:id" className="small-movie-card__link">{name + ` TestID ` + cardId}</Link>
       </h3>
     </article>
   );

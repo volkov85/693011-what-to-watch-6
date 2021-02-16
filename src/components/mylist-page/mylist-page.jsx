@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import MovieCard from "../movie-card/movie-card";
+import PropTypes from "prop-types";
 
 const MyList = ({films}) => {
   return (
@@ -53,6 +54,10 @@ const MyList = ({films}) => {
       </footer>
     </div>
   );
+};
+
+MyList.propTypes = {
+  films: PropTypes.array.isRequired
 };
 
 export default MyList;
