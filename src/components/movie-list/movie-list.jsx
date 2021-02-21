@@ -11,6 +11,7 @@ const MovieList = ({films}) => {
           name={item.name}
           previewImage={item.preview_image}
           id={item.id}
+          previewVideoLink={item.preview_video_link}
         />)
       }
     </div>

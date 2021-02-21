@@ -1,25 +1,31 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
+import VideoPlayer from '../video-player/video-player';
+import VideoCover from '../video-cover/video-cover';
 
-const MovieCard = ({id, name, previewImage}) => {
-  const [cardId, setActiveCard] = useState(id);
+const MovieCard = ({name, previewImage, previewVideoLink}) => {
+  const [toggle, setToggle] = useState(true);
 
-  const onMouseEnter = () => {
-    setActiveCard(` `);
+  const handleMouseEnter = () => {
+    setToggle(false);
   };
-  const onMouseLeave = () => {
-    setActiveCard(id);
+  const handleMouseLeave = () => {
+    setToggle(true);
   };
 
   return (
-    <article className="small-movie-card catalog__movies-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <div className="small-movie-card__image">
-        <img src={previewImage} alt={name} width="280" height="175"/>
-      </div>
-      <h3 className="small-movie-card__title">
-        <Link to="/films/:id" className="small-movie-card__link">{name + ` TestID ` + cardId}</Link>
-      </h3>
+    <article className="small-movie-card catalog__movies-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      {toggle ?
+        <VideoCover
+          previewImage={previewImage}
+          name={name}
+        /> :
+        <VideoPlayer
+          previewVideoLink={previewVideoLink}
+          previewImage={previewImage}
+          muted={true}
+          auto={true}
+        />}
     </article>
   );
 };
@@ -27,7 +33,8 @@ const MovieCard = ({id, name, previewImage}) => {
 MovieCard.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  previewImage: PropTypes.string.isRequired
+  previewImage: PropTypes.string.isRequired,
+  previewVideoLink: PropTypes.string.isRequired
 };
 
 export default MovieCard;
