@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 const VideoPlayer = ({previewVideoLink, previewImage, muted, auto}) => {
   return (
     <video
-      height="175px"
-      width="280px"
+      height="100%"
+      width="100%"
       autoPlay={auto}
       muted={muted}
       controls

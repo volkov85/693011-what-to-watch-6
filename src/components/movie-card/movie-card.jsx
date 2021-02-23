@@ -1,21 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import VideoPlayer from '../video-player/video-player';
 import VideoCover from '../video-cover/video-cover';
 
-const MovieCard = ({name, previewImage, previewVideoLink}) => {
-  const [toggle, setToggle] = useState(true);
+const MovieCard = ({id, name, previewImage, previewVideoLink, handleMouseEnterCard, showVideo}) => {
+  const [toggle, setToggle] = useState(false);
 
-  const handleMouseEnter = () => {
-    setToggle(false);
-  };
-  const handleMouseLeave = () => {
-    setToggle(true);
-  };
+  useEffect(() => {
+    let timerId = null;
+
+    if (showVideo) {
+      timerId = setTimeout(() => (setToggle(true)), 1000);
+    }
+
+    return () => {
+      if (timerId !== null) {
+        clearTimeout(timerId);
+      }
+      setToggle(false);
+    };
+  }, [showVideo]);
 
   return (
-    <article className="small-movie-card catalog__movies-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {toggle ?
+    <article className="small-movie-card catalog__movies-card"
+      onMouseEnter={() => handleMouseEnterCard(id)}
+      onMouseLeave={() => handleMouseEnterCard(null)}
+    >
+      {!toggle ?
         <VideoCover
           previewImage={previewImage}
           name={name}
@@ -34,7 +45,9 @@ MovieCard.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   previewImage: PropTypes.string.isRequired,
-  previewVideoLink: PropTypes.string.isRequired
+  previewVideoLink: PropTypes.string.isRequired,
+  handleMouseEnterCard: PropTypes.func.isRequired,
+  showVideo: PropTypes.bool.isRequired
 };
 
 export default MovieCard;
