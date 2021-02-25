@@ -26,7 +26,7 @@ const App = ({films}) => {
             films = {films}
           />
         </Route>
-        <Route exact path="/films/:id">
+        <Route exact path="/films/:id?">
           <MoviePage />
         </Route>
         <Route exact path="/films/:id/review">
@@ -36,7 +36,7 @@ const App = ({films}) => {
             posterImage = {films[0].poster_image}
           />
         </Route>
-        <Route exact path="/player/:id">
+        <Route exact path="/player/:id?">
           <PlayerPage
             name = {films[0].name}
             videoLink = {films[0].video_link}

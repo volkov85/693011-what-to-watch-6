@@ -65,7 +65,6 @@ const MoviePage = () => {
 
             <div className="movie-card__desc">
               <MovieTabs />
-              <MoviePageOverview />
             </div>
           </div>
         </div>
