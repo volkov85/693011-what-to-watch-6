@@ -1,15 +1,11 @@
 import React, {useState} from 'react';
-import MoviePageDetails from "../movie-page-details/movie-page-details";
-import MoviePageReviews from "../movie-page-reviews/movie-page-reviews";
-import MoviePageOverview from "../movie-page-overview/movie-page-overview";
+import MoviePageDetails from '../movie-page-details/movie-page-details';
+import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
+import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import {Link} from "react-router-dom";
 
 const MovieTabs = () => {
   const [activeTab, setActiveTab] = useState(`Overview`);
-
-  const handleTabClick = (tabName) => {
-    setActiveTab(tabName);
-  };
 
   const getActiveTabContent = () => {
     switch (activeTab) {
@@ -37,7 +33,7 @@ const MovieTabs = () => {
             <Link to="#" className="movie-nav__link"
               onClick={(evt)=> {
                 evt.preventDefault();
-                handleTabClick(`Overview`);
+                setActiveTab(`Overview`);
               }}>Overview
             </Link>
           </li>
@@ -45,7 +41,7 @@ const MovieTabs = () => {
             <Link to="#" className="movie-nav__link"
               onClick={(evt)=> {
                 evt.preventDefault();
-                handleTabClick(`Details`);
+                setActiveTab(`Details`);
               }}>Details
             </Link>
           </li>
@@ -53,7 +49,7 @@ const MovieTabs = () => {
             <Link to="#" className="movie-nav__link"
               onClick={(evt)=> {
                 evt.preventDefault();
-                handleTabClick(`Reviews`);
+                setActiveTab(`Reviews`);
               }}>Reviews
             </Link>
           </li>
