@@ -48,6 +48,7 @@ const MoviePageReviews = () => {
           <div className="review__rating">8,0</div>
         </div>
       </div>
+
       <div className="movie-card__reviews-col">
         <div className="review">
           <blockquote className="review__quote">

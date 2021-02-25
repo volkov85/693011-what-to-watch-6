@@ -1,25 +1,42 @@
-import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
+import VideoPlayer from '../video-player/video-player';
+import VideoCover from '../video-cover/video-cover';
 
-const MovieCard = ({id, name, previewImage}) => {
-  const [cardId, setActiveCard] = useState(id);
+const MovieCard = ({id, name, previewImage, previewVideoLink, handleMouseEnterCard, showVideo}) => {
+  const [toggle, setToggle] = useState(false);
 
-  const onMouseEnter = () => {
-    setActiveCard(` `);
-  };
-  const onMouseLeave = () => {
-    setActiveCard(id);
-  };
+  useEffect(() => {
+    let timerId = null;
+
+    if (showVideo) {
+      timerId = setTimeout(() => (setToggle(true)), 1000);
+    }
+
+    return () => {
+      if (timerId !== null) {
+        clearTimeout(timerId);
+      }
+      setToggle(false);
+    };
+  }, [showVideo]);
 
   return (
-    <article className="small-movie-card catalog__movies-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <div className="small-movie-card__image">
-        <img src={previewImage} alt={name} width="280" height="175"/>
-      </div>
-      <h3 className="small-movie-card__title">
-        <Link to="/films/:id" className="small-movie-card__link">{name + ` TestID ` + cardId}</Link>
-      </h3>
+    <article className="small-movie-card catalog__movies-card"
+      onMouseEnter={() => handleMouseEnterCard(id)}
+      onMouseLeave={() => handleMouseEnterCard(null)}
+    >
+      {!toggle ?
+        <VideoCover
+          previewImage={previewImage}
+          name={name}
+        /> :
+        <VideoPlayer
+          previewVideoLink={previewVideoLink}
+          previewImage={previewImage}
+          muted={true}
+          auto={true}
+        />}
     </article>
   );
 };
@@ -27,7 +44,10 @@ const MovieCard = ({id, name, previewImage}) => {
 MovieCard.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  previewImage: PropTypes.string.isRequired
+  previewImage: PropTypes.string.isRequired,
+  previewVideoLink: PropTypes.string.isRequired,
+  handleMouseEnterCard: PropTypes.func.isRequired,
+  showVideo: PropTypes.bool.isRequired
 };
 
 export default MovieCard;

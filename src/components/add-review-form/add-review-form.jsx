@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 const AddReviewForm = () => {
-  const STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const stars = new Array(10).fill(``).map((_, i) => i + 1);
 
   const [userForm, setUserForm] = useState({
     review: ``,
@@ -23,7 +23,7 @@ const AddReviewForm = () => {
         <div className="rating">
           <div className="rating__stars">
             {
-              STARS.map((star, index) => (
+              stars.map((star, index) => (
                 <React.Fragment key={index}>
                   <input className="rating__input" id={`star-` + star} type="radio" name="rating" value={star}/>
                   <label className="rating__label" htmlFor={`star-` + star}>
