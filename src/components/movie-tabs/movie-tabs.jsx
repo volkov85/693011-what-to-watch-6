@@ -2,16 +2,23 @@ import React, {useState} from 'react';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const MovieTabs = () => {
+const MovieTabs = ({film}) => {
   const [activeTab, setActiveTab] = useState(`Overview`);
 
   const getActiveTabContent = () => {
     switch (activeTab) {
       case `Details`:
         return (
-          <MoviePageDetails />
+          <MoviePageDetails
+            genre={film.genre}
+            released={film.released}
+            director={film.director}
+            starring={film.starring}
+            runTime={film.run_time}
+          />
         );
       case `Reviews`:
         return (
@@ -58,6 +65,10 @@ const MovieTabs = () => {
       {getActiveTabContent(activeTab)}
     </>
   );
+};
+
+MovieTabs.propTypes = {
+  film: PropTypes.object.isRequired
 };
 
 export default MovieTabs;

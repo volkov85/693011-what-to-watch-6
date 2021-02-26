@@ -1,16 +1,19 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import MovieTabs from '../movie-tabs/movie-tabs';
 import MovieList from '../movie-list/movie-list';
 import PropTypes from 'prop-types';
 
 const MoviePage = ({films}) => {
+  const {id} = useParams();
+  const film = films.find((item) => item.id === parseInt(id, 10));
+
   return (
     <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={films[0].background_image} alt={films[0].name}/>
+            <img src={film.background_image} alt={film.name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -33,10 +36,10 @@ const MoviePage = ({films}) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{films[0].name}</h2>
+              <h2 className="movie-card__title">{film.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{films[0].genre}</span>
-                <span className="movie-card__year">{films[0].released}</span>
+                <span className="movie-card__genre">{film.genre}</span>
+                <span className="movie-card__year">{film.released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -61,11 +64,13 @@ const MoviePage = ({films}) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={films[0].poster_image} alt={films[0].name} width="218" height="327"/>
+              <img src={film.poster_image} alt={film.name} width="218" height="327"/>
             </div>
 
             <div className="movie-card__desc">
-              <MovieTabs />
+              <MovieTabs
+                film={film}
+              />
             </div>
           </div>
         </div>

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MovieList from "../movie-list/movie-list";
+import MovieList from '../movie-list/movie-list';
 
 const MainPage = ({films}) => {
   return (
     <>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={films[0].background_image} alt="The Grand Budapest Hotel"/>
+          <img src={films[0].background_image} alt={films[0].name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -31,7 +31,7 @@ const MainPage = ({films}) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={films[0].poster_image} alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src={films[0].poster_image} alt={films[0].name} width="218" height="327"/>
             </div>
 
             <div className="movie-card__desc">
