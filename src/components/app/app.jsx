@@ -33,9 +33,7 @@ const App = ({films}) => {
         </Route>
         <Route exact path="/films/:id/review">
           <AddReviewPage
-            backgroundImage = {films[0].background_image}
-            name = {films[0].name}
-            posterImage = {films[0].poster_image}
+            films = {films}
           />
         </Route>
         <Route exact path="/player/:id?">
