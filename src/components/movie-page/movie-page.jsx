@@ -1,14 +1,20 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import MoviePageOverview from '../movie-page-overview/movie-page-overview';
+import {Link, useParams} from 'react-router-dom';
+import MovieTabs from '../movie-tabs/movie-tabs';
+import MovieList from '../movie-list/movie-list';
+import PropTypes from 'prop-types';
+import {MOVIE_PAGE_FILMS_COUNT} from '../../const';
 
-const MoviePage = () => {
+const MoviePage = ({films}) => {
+  const {id} = useParams();
+  const film = films.find((item) => item.id === parseInt(id, 10));
+
   return (
     <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+            <img src={film.background_image} alt={film.name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -31,10 +37,10 @@ const MoviePage = () => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="movie-card__title">{film.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">Drama</span>
-                <span className="movie-card__year">2014</span>
+                <span className="movie-card__genre">{film.genre}</span>
+                <span className="movie-card__year">{film.released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -50,7 +56,7 @@ const MoviePage = () => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to="/films/:id/review" className="btn movie-card__button">Add review</Link>
+                <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -59,26 +65,13 @@ const MoviePage = () => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+              <img src={film.poster_image} alt={film.name} width="218" height="327"/>
             </div>
 
             <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <MoviePageOverview />
-
+              <MovieTabs
+                film={film}
+              />
             </div>
           </div>
         </div>
@@ -89,43 +82,8 @@ const MoviePage = () => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__movies-list">
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175"/>
-              </div>
-              <h3 className="small-movie-card__title">
-                <Link className="small-movie-card__link" to="/films/:id">Fantastic Beasts: The Crimes of Grindelwald</Link>
-              </h3>
-            </article>
+          <MovieList films = {films.filter((item) => item.genre === film.genre).slice(0, MOVIE_PAGE_FILMS_COUNT)} />
 
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175"/>
-              </div>
-              <h3 className="small-movie-card__title">
-                <Link className="small-movie-card__link" to="/films/:id">Bohemian Rhapsody</Link>
-              </h3>
-            </article>
-
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175"/>
-              </div>
-              <h3 className="small-movie-card__title">
-                <Link className="small-movie-card__link" to="/films/:id">Macbeth</Link>
-              </h3>
-            </article>
-
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175"/>
-              </div>
-              <h3 className="small-movie-card__title">
-                <Link className="small-movie-card__link" to="/films/:id">Aviator</Link>
-              </h3>
-            </article>
-          </div>
         </section>
 
         <footer className="page-footer">
@@ -144,6 +102,10 @@ const MoviePage = () => {
       </div>
     </>
   );
+};
+
+MoviePage.propTypes = {
+  films: PropTypes.array.isRequired
 };
 
 export default MoviePage;

@@ -30,6 +30,7 @@ const MovieCard = ({id, name, previewImage, previewVideoLink, handleMouseEnterCa
         <VideoCover
           previewImage={previewImage}
           name={name}
+          id={id}
         /> :
         <VideoPlayer
           previewVideoLink={previewVideoLink}
