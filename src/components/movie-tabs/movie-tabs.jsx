@@ -27,7 +27,13 @@ const MovieTabs = ({film}) => {
       case `Overview`:
       default:
         return (
-          <MoviePageOverview />
+          <MoviePageOverview
+            rating={film.rating}
+            scoresCount={film.scores_count}
+            description={film.description}
+            starring={film.starring}
+            director={film.director}
+          />
         );
     }
   };
