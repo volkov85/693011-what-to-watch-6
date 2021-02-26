@@ -12,7 +12,7 @@ export default [
   },
   {
     "id": 2,
-    "film_id": 2,
+    "film_id": 1,
     "user": {
       "id": 4,
       "name": `username1`
@@ -23,7 +23,7 @@ export default [
   },
   {
     "id": 3,
-    "film_id": 3,
+    "film_id": 1,
     "user": {
       "id": 4,
       "name": `username1`
@@ -34,7 +34,7 @@ export default [
   },
   {
     "id": 4,
-    "film_id": 4,
+    "film_id": 1,
     "user": {
       "id": 4,
       "name": `username1`
@@ -45,7 +45,7 @@ export default [
   },
   {
     "id": 5,
-    "film_id": 5,
+    "film_id": 7,
     "user": {
       "id": 4,
       "name": `username1`
@@ -56,7 +56,7 @@ export default [
   },
   {
     "id": 6,
-    "film_id": 6,
+    "film_id": 7,
     "user": {
       "id": 4,
       "name": `username1`
@@ -78,7 +78,7 @@ export default [
   },
   {
     "id": 8,
-    "film_id": 8,
+    "film_id": 7,
     "user": {
       "id": 4,
       "name": `username1`
@@ -89,7 +89,7 @@ export default [
   },
   {
     "id": 9,
-    "film_id": 8,
+    "film_id": 7,
     "user": {
       "id": 4,
       "name": `username1`
@@ -100,7 +100,7 @@ export default [
   },
   {
     "id": 10,
-    "film_id": 1,
+    "film_id": 7,
     "user": {
       "id": 5,
       "name": `username5`
@@ -111,7 +111,7 @@ export default [
   },
   {
     "id": 11,
-    "film_id": 1,
+    "film_id": 7,
     "user": {
       "id": 4,
       "name": `username1`

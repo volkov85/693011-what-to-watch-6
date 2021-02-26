@@ -1,29 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {RatingName, RatingScope} from '../../const';
 
 const MoviePageOverview = ({rating, scoresCount, description, director, starring}) => {
-  const ratingName = {
-    BAD: `Bad`,
-    NORMAL: `Normal`,
-    GOOD: `Good`,
-    VERY_GOOD: `Very good`,
-    AWESOME: `Awesome`,
-  };
-
-  const ratingScope = {
-    BAD: 3,
-    NORMAL: 5,
-    GOOD: 8,
-    VERY_GOOD: 9,
-    AWESOME: 10,
-  };
-
   return (
     <>
       <div className="movie-rating">
         <div className="movie-rating__score">{String(rating).replace(`.`, `,`)}</div>
         <p className="movie-rating__meta">
-          <span className="movie-rating__level">{ratingName[Object.keys(ratingScope).find((item) => ratingScope[item] >= rating)]}</span>
+          <span className="movie-rating__level">{RatingName[Object.keys(RatingScope).find((item) => RatingScope[item] >= rating)]}</span>
           <span className="movie-rating__count">{scoresCount} ratings</span>
         </p>
       </div>

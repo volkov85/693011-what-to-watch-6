@@ -3,6 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import MovieTabs from '../movie-tabs/movie-tabs';
 import MovieList from '../movie-list/movie-list';
 import PropTypes from 'prop-types';
+import {MOVIE_PAGE_FILMS_COUNT} from '../../const';
 
 const MoviePage = ({films}) => {
   const {id} = useParams();
@@ -81,7 +82,7 @@ const MoviePage = ({films}) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MovieList films = {films.filter((item) => item.genre === films[0].genre).slice(0, 4)} />
+          <MovieList films = {films.filter((item) => item.genre === film.genre).slice(0, MOVIE_PAGE_FILMS_COUNT)} />
 
         </section>
 

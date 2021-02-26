@@ -4,9 +4,11 @@ import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import reviews from '../../mocks/reviews';
+import {FilmTabNames} from "../../const";
 
 const MovieTabs = ({film}) => {
-  const [activeTab, setActiveTab] = useState(`Overview`);
+  const [activeTab, setActiveTab] = useState(FilmTabNames.OVERVIEW);
 
   const getActiveTabContent = () => {
     switch (activeTab) {
@@ -22,7 +24,9 @@ const MovieTabs = ({film}) => {
         );
       case `Reviews`:
         return (
-          <MoviePageReviews />
+          <MoviePageReviews
+            reviews={reviews.filter((item) => item.film_id === film.id)}
+          />
         );
       case `Overview`:
       default:
@@ -42,28 +46,28 @@ const MovieTabs = ({film}) => {
     <>
       <nav className="movie-nav movie-card__nav">
         <ul className="movie-nav__list">
-          <li className={`movie-nav__item` + (activeTab === `Overview` ? ` movie-nav__item--active` : ``)}>
+          <li className={`movie-nav__item` + (activeTab === FilmTabNames.OVERVIEW ? ` movie-nav__item--active` : ``)}>
             <Link to="#" className="movie-nav__link"
               onClick={(evt)=> {
                 evt.preventDefault();
-                setActiveTab(`Overview`);
-              }}>Overview
+                setActiveTab(FilmTabNames.OVERVIEW);
+              }}>{FilmTabNames.OVERVIEW}
             </Link>
           </li>
-          <li className={`movie-nav__item` + (activeTab === `Details` ? ` movie-nav__item--active` : ``)}>
+          <li className={`movie-nav__item` + (activeTab === FilmTabNames.DETAILS ? ` movie-nav__item--active` : ``)}>
             <Link to="#" className="movie-nav__link"
               onClick={(evt)=> {
                 evt.preventDefault();
-                setActiveTab(`Details`);
-              }}>Details
+                setActiveTab(FilmTabNames.DETAILS);
+              }}>{FilmTabNames.DETAILS}
             </Link>
           </li>
-          <li className={`movie-nav__item` + (activeTab === `Reviews` ? ` movie-nav__item--active` : ``)}>
+          <li className={`movie-nav__item` + (activeTab === FilmTabNames.REVIEWS ? ` movie-nav__item--active` : ``)}>
             <Link to="#" className="movie-nav__link"
               onClick={(evt)=> {
                 evt.preventDefault();
-                setActiveTab(`Reviews`);
-              }}>Reviews
+                setActiveTab(FilmTabNames.REVIEWS);
+              }}>{FilmTabNames.REVIEWS}
             </Link>
           </li>
         </ul>
