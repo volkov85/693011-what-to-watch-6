@@ -2,9 +2,11 @@ import {ActionType} from './action';
 import films from '../mocks/films';
 import reviews from '../mocks/reviews';
 import {FILTER_ALL_GENRES} from '../const';
+import {getFilteredFilms} from '../utils';
 
 const initialState = {
-  genre: FILTER_ALL_GENRES,
+  selectedGenre: FILTER_ALL_GENRES,
+  initialFilms: films,
   films,
   reviews
 };
@@ -14,12 +16,12 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_GENRE:
       return {
         ...state,
-        genre: action.payload
+        selectedGenre: action.payload
       };
     case ActionType.GET_MOVIE_LIST:
       return {
         ...state,
-        films: [...state.films]
+        films: getFilteredFilms([...state.initialFilms], state.selectedGenre)
       };
     default: return state;
   }

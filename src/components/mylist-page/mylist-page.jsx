@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import PropTypes from "prop-types";
 import MovieCard from "../movie-card/movie-card";
 
 const MyList = ({films}) => {
+  const [filmActive, setFilmActive] = useState(null);
+
+  const handleMouseEnterCard = (id) => {
+    setFilmActive(id);
+  };
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -35,6 +41,9 @@ const MyList = ({films}) => {
               name={item.name}
               previewImage={item.preview_image}
               id={item.id}
+              previewVideoLink={item.preview_video_link}
+              handleMouseEnterCard={handleMouseEnterCard}
+              showVideo={filmActive === item.id}
             />)
           }
         </div>

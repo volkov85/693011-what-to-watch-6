@@ -51,7 +51,8 @@ const MovieTabs = ({film}) => {
               onClick={(evt)=> {
                 evt.preventDefault();
                 setActiveTab(FilmTabNames.OVERVIEW);
-              }}>{FilmTabNames.OVERVIEW}
+              }}>
+              {FilmTabNames.OVERVIEW}
             </Link>
           </li>
           <li className={`movie-nav__item` + (activeTab === FilmTabNames.DETAILS ? ` movie-nav__item--active` : ``)}>
@@ -59,7 +60,8 @@ const MovieTabs = ({film}) => {
               onClick={(evt)=> {
                 evt.preventDefault();
                 setActiveTab(FilmTabNames.DETAILS);
-              }}>{FilmTabNames.DETAILS}
+              }}>
+              {FilmTabNames.DETAILS}
             </Link>
           </li>
           <li className={`movie-nav__item` + (activeTab === FilmTabNames.REVIEWS ? ` movie-nav__item--active` : ``)}>
@@ -67,7 +69,8 @@ const MovieTabs = ({film}) => {
               onClick={(evt)=> {
                 evt.preventDefault();
                 setActiveTab(FilmTabNames.REVIEWS);
-              }}>{FilmTabNames.REVIEWS}
+              }}>
+              {FilmTabNames.REVIEWS}
             </Link>
           </li>
         </ul>
