@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
 const PlayerPage = ({films}) => {
@@ -46,4 +47,9 @@ PlayerPage.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-export default PlayerPage;
+const mapStateToProps = (state) => ({
+  films: state.films
+});
+
+export {PlayerPage};
+export default connect(mapStateToProps, null)(PlayerPage);

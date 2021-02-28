@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import MovieCard from "../movie-card/movie-card";
+import {connect} from 'react-redux';
 import PropTypes from "prop-types";
+import MovieCard from "../movie-card/movie-card";
 
 const MyList = ({films}) => {
   return (
@@ -60,4 +61,9 @@ MyList.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  films: state.films
+});
+
+export {MyList};
+export default connect(mapStateToProps, null)(MyList);
