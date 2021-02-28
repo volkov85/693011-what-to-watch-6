@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import MovieList from '../movie-list/movie-list';
 import {MAIN_PAGE_FILMS_COUNT} from '../../const';
 
@@ -126,4 +127,9 @@ MainPage.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  films: state.films
+});
+
+export {MainPage};
+export default connect(mapStateToProps, null)(MainPage);

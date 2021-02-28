@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import {useParams} from 'react-router-dom';
 
-const PlayerPage = ({name, videoLink}) => {
+const PlayerPage = ({films}) => {
+  const {id} = useParams();
+  const film = films.find((item) => item.id === parseInt(id, 10));
+
   return (
     <div className="player">
-      <video src={videoLink} className="player__video" poster="img/player-poster.jpg"/>
+      <video src={film.video_link} className="player__video" poster="img/player-poster.jpg"/>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -24,7 +28,7 @@ const PlayerPage = ({name, videoLink}) => {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">{name}</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
@@ -39,8 +43,7 @@ const PlayerPage = ({name, videoLink}) => {
 };
 
 PlayerPage.propTypes = {
-  name: PropTypes.string.isRequired,
-  videoLink: PropTypes.string.isRequired
+  films: PropTypes.array.isRequired
 };
 
 export default PlayerPage;

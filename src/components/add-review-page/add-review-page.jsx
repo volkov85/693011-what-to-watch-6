@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AddReviewForm from '../add-review-form/add-review-form';
+import {connect} from 'react-redux';
 
 const AddReviewPage = ({films}) => {
   const {id} = useParams();
@@ -60,4 +61,9 @@ AddReviewPage.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-export default AddReviewPage;
+const mapStateToProps = (state) => ({
+  films: state.films
+});
+
+export {AddReviewPage};
+export default connect(mapStateToProps, null)(AddReviewPage);
