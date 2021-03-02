@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
-import MovieCard from "../movie-card/movie-card";
+import {connect} from 'react-redux';
 import PropTypes from "prop-types";
+import MovieCard from "../movie-card/movie-card";
 
 const MyList = ({films}) => {
+  const [filmActive, setFilmActive] = useState(null);
+
+  const handleMouseEnterCard = (id) => {
+    setFilmActive(id);
+  };
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -34,6 +41,9 @@ const MyList = ({films}) => {
               name={item.name}
               previewImage={item.preview_image}
               id={item.id}
+              previewVideoLink={item.preview_video_link}
+              handleMouseEnterCard={handleMouseEnterCard}
+              showVideo={filmActive === item.id}
             />)
           }
         </div>
@@ -60,4 +70,9 @@ MyList.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  films: state.films
+});
+
+export {MyList};
+export default connect(mapStateToProps, null)(MyList);
