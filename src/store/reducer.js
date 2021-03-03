@@ -1,14 +1,10 @@
 import {ActionType} from './action';
-import films from '../mocks/films';
-import reviews from '../mocks/reviews';
 import {FILTER_ALL_GENRES, AuthorizationStatus} from '../const';
 import {getFilteredFilms} from '../utils';
 
 const initialState = {
   selectedGenre: FILTER_ALL_GENRES,
-  initialFilms: films,
-  films,
-  reviews,
+  films: [],
   authorizationStatus: AuthorizationStatus.NO_AUTH
 };
 
