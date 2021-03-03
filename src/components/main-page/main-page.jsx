@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {MAIN_PAGE_FILMS_COUNT} from '../../const';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {fetchMovies} from "../../store/api-actions";
 
-const MainPage = ({films}) => {
+const MainPage = ({films, isDataLoaded, onLoadData}) => {
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <>
       <section className="movie-card">
@@ -93,12 +107,21 @@ const MainPage = ({films}) => {
 };
 
 MainPage.propTypes = {
-  films: PropTypes.array.isRequired
+  films: PropTypes.array.isRequired,
+  isDataLoaded: PropTypes.string.isRequired,
+  onLoadData: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films
+  films: state.films,
+  isDataLoaded: state.isDataLoaded
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchMovies());
+  }
 });
 
 export {MainPage};
-export default connect(mapStateToProps, null)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
