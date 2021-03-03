@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import MoviePageDetails from '../movie-page-details/movie-page-details';
-import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
-import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import reviews from '../../mocks/reviews';
 import {FilmTabNames} from "../../const";
+import MoviePageDetails from '../movie-page-details/movie-page-details';
+import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
+import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 
 const MovieTabs = ({film}) => {
   const [activeTab, setActiveTab] = useState(FilmTabNames.OVERVIEW);

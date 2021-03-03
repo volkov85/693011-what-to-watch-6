@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import MovieList from '../movie-list/movie-list';
 import {MAIN_PAGE_FILMS_COUNT} from '../../const';
+import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 
 const MainPage = ({films}) => {
