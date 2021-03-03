@@ -24,6 +24,11 @@ const reducer = (state = initialState, action) => {
         films: getFilteredFilms([...state.initialFilms], state.selectedGenre)
       };
     default: return state;
+    case ActionType.LOAD_MOVIES:
+      return {
+        ...state,
+        movies: action.payload,
+      };
   }
 };
 
