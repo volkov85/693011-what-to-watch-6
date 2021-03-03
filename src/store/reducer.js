@@ -4,8 +4,10 @@ import {getFilteredFilms} from '../utils';
 
 const initialState = {
   selectedGenre: FILTER_ALL_GENRES,
+  initialFilms: [],
   films: [],
-  authorizationStatus: AuthorizationStatus.NO_AUTH
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoaded: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,19 +20,26 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_MOVIE_LIST:
       return {
         ...state,
-        films: getFilteredFilms([...state.initialFilms], state.selectedGenre)
+        films: getFilteredFilms([...state.films], state.selectedGenre)
       };
-    default: return state;
+    case ActionType.RESET_MOVIE_LIST:
+      return {
+        ...state,
+        films: state.initialFilms
+      };
     case ActionType.LOAD_MOVIES:
       return {
         ...state,
-        movies: action.payload,
+        films: action.payload,
+        initialFilms: action.payload,
+        isDataLoaded: true
       };
     case ActionType.REQUIRE_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload
       };
+    default: return state;
   }
 };
 

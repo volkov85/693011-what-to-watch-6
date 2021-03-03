@@ -108,7 +108,7 @@ const MainPage = ({films, isDataLoaded, onLoadData}) => {
 
 MainPage.propTypes = {
   films: PropTypes.array.isRequired,
-  isDataLoaded: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired
 };
 
