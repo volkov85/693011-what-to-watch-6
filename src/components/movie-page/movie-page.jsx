@@ -1,10 +1,10 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MovieTabs from '../movie-tabs/movie-tabs';
-import MovieList from '../movie-list/movie-list';
 import {connect} from 'react-redux';
 import {MOVIE_PAGE_FILMS_COUNT} from '../../const';
+import MovieTabs from '../movie-tabs/movie-tabs';
+import MovieList from '../movie-list/movie-list';
 
 const MoviePage = ({films}) => {
   const {id} = useParams();

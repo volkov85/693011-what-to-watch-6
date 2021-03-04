@@ -1,15 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {getUniqueGenres} from '../../utils';
 import {ActionCreator} from '../../store/action';
+import {getUniqueGenres} from '../../utils';
 
 const GenreList = ({genres, selectedGenre, handleSelectGenre}) => {
   return (
     <ul className="catalog__genres-list">
       {
         genres.map((item, index) => (
-          <li key={index} className={`catalog__genres-item ${item === selectedGenre ? `catalog__genres-item--active` : ``}`}>
+          <li key={`genre-${index}`} className={`catalog__genres-item ${item === selectedGenre ? `catalog__genres-item--active` : ``}`}>
             <a href="#" className="catalog__genres-link"
               onClick={(evt) => {
                 evt.preventDefault();
@@ -37,6 +37,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   handleSelectGenre(genre) {
+    dispatch(ActionCreator.resetMovieList());
     dispatch(ActionCreator.changeGenre(genre));
     dispatch(ActionCreator.getMovieList());
   }

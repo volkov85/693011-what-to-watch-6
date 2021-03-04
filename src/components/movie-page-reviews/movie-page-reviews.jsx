@@ -1,6 +1,6 @@
 import React from 'react';
-import Review from '../review/review';
 import PropTypes from 'prop-types';
+import Review from '../review/review';
 
 const MoviePageReviews = ({reviews}) => {
   return (

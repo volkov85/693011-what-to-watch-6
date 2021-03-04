@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import AddReviewForm from '../add-review-form/add-review-form';
 import {connect} from 'react-redux';
+import AddReviewForm from '../add-review-form/add-review-form';
 
 const AddReviewPage = ({films}) => {
   const {id} = useParams();

@@ -1,14 +1,13 @@
 import {ActionType} from './action';
-import films from '../mocks/films';
-import reviews from '../mocks/reviews';
-import {FILTER_ALL_GENRES} from '../const';
+import {FILTER_ALL_GENRES, AuthorizationStatus} from '../const';
 import {getFilteredFilms} from '../utils';
 
 const initialState = {
   selectedGenre: FILTER_ALL_GENRES,
-  initialFilms: films,
-  films,
-  reviews
+  initialFilms: [],
+  films: [],
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoaded: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,7 +20,24 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_MOVIE_LIST:
       return {
         ...state,
-        films: getFilteredFilms([...state.initialFilms], state.selectedGenre)
+        films: getFilteredFilms([...state.films], state.selectedGenre)
+      };
+    case ActionType.RESET_MOVIE_LIST:
+      return {
+        ...state,
+        films: state.initialFilms
+      };
+    case ActionType.LOAD_MOVIES:
+      return {
+        ...state,
+        films: action.payload,
+        initialFilms: action.payload,
+        isDataLoaded: true
+      };
+    case ActionType.REQUIRE_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload
       };
     default: return state;
   }
