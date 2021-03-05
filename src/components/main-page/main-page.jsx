@@ -1,13 +1,15 @@
 import React, {useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {MAIN_PAGE_FILMS_COUNT} from '../../const';
+import {MAIN_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchMovies} from "../../store/api-actions";
 
-const MainPage = ({films, isDataLoaded, onLoadData}) => {
+const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLogin}) => {
+
   useEffect(() => {
     if (!isDataLoaded) {
       onLoadData();
@@ -39,9 +41,19 @@ const MainPage = ({films, isDataLoaded, onLoadData}) => {
           </div>
 
           <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-            </div>
+            {
+              authorizationStatus === AuthorizationStatus.AUTH &&
+              <>
+                <div className="user-block__avatar">
+                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+                </div>
+                <p className="user-block">{userLogin}</p>
+              </>
+            }
+            {
+              authorizationStatus === AuthorizationStatus.NO_AUTH &&
+              <Link to="/login" className="user-block__link">Sign in</Link>
+            }
           </div>
         </header>
 
@@ -109,12 +121,16 @@ const MainPage = ({films, isDataLoaded, onLoadData}) => {
 MainPage.propTypes = {
   films: PropTypes.array.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired
+  onLoadData: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  userLogin: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
-  isDataLoaded: state.isDataLoaded
+  isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
+  userLogin: state.userLogin
 });
 
 const mapDispatchToProps = (dispatch) => ({
