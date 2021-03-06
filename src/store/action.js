@@ -3,7 +3,9 @@ export const ActionType = {
   GET_MOVIE_LIST: `movies/getMovieList`,
   RESET_MOVIE_LIST: `movies/resetMovieList`,
   LOAD_MOVIES: `data/loadMovies`,
-  REQUIRE_AUTHORIZATION: `user/requiredAuthorization`
+  REQUIRE_AUTHORIZATION: `user/requiredAuthorization`,
+  REDIRECT_TO_ROUTE: `user/redirectToRoute`,
+  STORE_USER_LOGIN: `user/storeUserLogin`
 };
 
 export const ActionCreator = {
@@ -24,5 +26,13 @@ export const ActionCreator = {
   loadMovies: (movies) => ({
     type: ActionType.LOAD_MOVIES,
     payload: movies
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url
+  }),
+  storeUserLogin: (email) => ({
+    type: ActionType.STORE_USER_LOGIN,
+    payload: email
   })
 };

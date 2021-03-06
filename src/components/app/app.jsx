@@ -1,5 +1,7 @@
 import React from 'react';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import browserHistory from '../../browser-history';
+import PrivateRoute from '../private-route/private-route';
 import MainPage from '../main-page/main-page';
 import AddReviewPage from '../add-review-page/add-review-page';
 import MoviePage from '../movie-page/movie-page';
@@ -10,7 +12,7 @@ import NotFoundPage from '../not-found-page/not-found-page';
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path="/">
           <MainPage />
@@ -18,15 +20,11 @@ const App = () => {
         <Route exact path="/login">
           <SignInPage />
         </Route>
-        <Route exact path="/mylist">
-          <MyList />
-        </Route>
+        <PrivateRoute exact path="/mylist" render={() => <MyList />}/>
         <Route exact path="/films/:id?">
           <MoviePage />
         </Route>
-        <Route exact path="/films/:id/review">
-          <AddReviewPage />
-        </Route>
+        <PrivateRoute exact path="/films/:id/review" render={() => <AddReviewPage />}/>
         <Route exact path="/player/:id?">
           <PlayerPage />
         </Route>

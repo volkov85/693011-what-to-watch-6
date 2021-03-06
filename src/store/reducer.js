@@ -7,7 +7,8 @@ const initialState = {
   initialFilms: [],
   films: [],
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  isDataLoaded: false
+  isDataLoaded: false,
+  userLogin: `User is not authorized`
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,7 +38,12 @@ const reducer = (state = initialState, action) => {
     case ActionType.REQUIRE_AUTHORIZATION:
       return {
         ...state,
-        authorizationStatus: action.payload
+        authorizationStatus: action.payload,
+      };
+    case ActionType.STORE_USER_LOGIN:
+      return {
+        ...state,
+        userLogin: action.payload,
       };
     default: return state;
   }
