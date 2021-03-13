@@ -6,7 +6,7 @@ export const ActionType = {
   LOAD_PROMO_MOVIE: `data/loadPromoMovie`,
   REQUIRE_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
-  STORE_USER_LOGIN: `user/storeUserLogin`
+  STORE_USER_LOGIN: `user/storeUserLogin`,
 };
 
 export const ActionCreator = {

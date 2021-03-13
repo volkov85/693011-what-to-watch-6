@@ -9,7 +9,7 @@ const initialState = {
   moviePromo: {},
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
-  userLogin: `User is not authorized`
+  email: ``
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,7 +49,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.STORE_USER_LOGIN:
       return {
         ...state,
-        userLogin: action.payload,
+        email: action.payload,
       };
     default: return state;
   }

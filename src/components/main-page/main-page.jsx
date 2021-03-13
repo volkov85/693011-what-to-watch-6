@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -6,9 +6,13 @@ import {MAIN_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 import LoadingScreen from '../loading-screen/loading-screen';
+import ShowMore from '../show-more/show-more';
 import {fetchMovies, fetchPromoMovie} from "../../store/api-actions";
 
-const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLogin, moviePromo}) => {
+const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, email, moviePromo}) => {
+  const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
+  const handleShowMoreClick = () => setFilmsCount((currentCount) => currentCount + MAIN_PAGE_FILMS_COUNT);
+
   useEffect(() => {
     if (!isDataLoaded) {
       onLoadData();
@@ -46,7 +50,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLog
                 <div className="user-block__avatar">
                   <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
                 </div>
-                <p className="user-block">{userLogin}</p>
+                <p className="user-block">{email}</p>
               </>
             }
             {
@@ -92,11 +96,9 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLog
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList />
-          <MovieList films = {films.slice(0, MAIN_PAGE_FILMS_COUNT)} />
+          <MovieList films = {films.slice(0, filmsCount)} />
+          {filmsCount < films.length && <ShowMore onClick={handleShowMoreClick} />}
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <footer className="page-footer">
@@ -122,7 +124,7 @@ MainPage.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  userLogin: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
   moviePromo: PropTypes.object.isRequired
 };
 
@@ -130,7 +132,7 @@ const mapStateToProps = (state) => ({
   films: state.films,
   isDataLoaded: state.isDataLoaded,
   authorizationStatus: state.authorizationStatus,
-  userLogin: state.userLogin,
+  email: state.email,
   moviePromo: state.moviePromo
 });
 
