@@ -6,10 +6,9 @@ import {MAIN_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {fetchMovies} from "../../store/api-actions";
+import {fetchMovies, fetchPromoMovie} from "../../store/api-actions";
 
-const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLogin}) => {
-
+const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLogin, moviePromo}) => {
   useEffect(() => {
     if (!isDataLoaded) {
       onLoadData();
@@ -26,7 +25,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLog
     <>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={films[0].background_image} alt={films[0].name}/>
+          <img src={moviePromo.background_image} alt={moviePromo.name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -60,14 +59,14 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLog
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={films[0].poster_image} alt={films[0].name} width="218" height="327"/>
+              <img src={moviePromo.poster_image} alt={moviePromo.name} width="218" height="327"/>
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{films[0].name}</h2>
+              <h2 className="movie-card__title">{moviePromo.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{films[0].genre}</span>
-                <span className="movie-card__year">{films[0].released}</span>
+                <span className="movie-card__genre">{moviePromo.genre}</span>
+                <span className="movie-card__year">{moviePromo.released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -123,19 +122,22 @@ MainPage.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  userLogin: PropTypes.string.isRequired
+  userLogin: PropTypes.string.isRequired,
+  moviePromo: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   isDataLoaded: state.isDataLoaded,
   authorizationStatus: state.authorizationStatus,
-  userLogin: state.userLogin
+  userLogin: state.userLogin,
+  moviePromo: state.moviePromo
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchMovies());
+    dispatch(fetchPromoMovie());
   }
 });
 
