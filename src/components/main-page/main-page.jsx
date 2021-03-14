@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -6,9 +6,12 @@ import {MAIN_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {fetchMovies} from "../../store/api-actions";
+import ShowMore from '../show-more/show-more';
+import {fetchMovies, fetchPromoMovie} from "../../store/api-actions";
 
-const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLogin}) => {
+const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, email, moviePromo}) => {
+  const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
+  const handleShowMoreClick = () => setFilmsCount((currentCount) => currentCount + MAIN_PAGE_FILMS_COUNT);
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -26,7 +29,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLog
     <>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={films[0].background_image} alt={films[0].name}/>
+          <img src={moviePromo.background_image} alt={moviePromo.name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -47,7 +50,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLog
                 <div className="user-block__avatar">
                   <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
                 </div>
-                <p className="user-block">{userLogin}</p>
+                <p className="user-block">{email}</p>
               </>
             }
             {
@@ -60,14 +63,14 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLog
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={films[0].poster_image} alt={films[0].name} width="218" height="327"/>
+              <img src={moviePromo.poster_image} alt={moviePromo.name} width="218" height="327"/>
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{films[0].name}</h2>
+              <h2 className="movie-card__title">{moviePromo.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{films[0].genre}</span>
-                <span className="movie-card__year">{films[0].released}</span>
+                <span className="movie-card__genre">{moviePromo.genre}</span>
+                <span className="movie-card__year">{moviePromo.released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -93,11 +96,9 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, userLog
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenreList />
-          <MovieList films = {films.slice(0, MAIN_PAGE_FILMS_COUNT)} />
+          <MovieList films = {films.slice(0, filmsCount)} />
+          {filmsCount < films.length && <ShowMore onClick={handleShowMoreClick} />}
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <footer className="page-footer">
@@ -123,19 +124,22 @@ MainPage.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  userLogin: PropTypes.string.isRequired
+  email: PropTypes.string.isRequired,
+  moviePromo: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   isDataLoaded: state.isDataLoaded,
   authorizationStatus: state.authorizationStatus,
-  userLogin: state.userLogin
+  email: state.email,
+  moviePromo: state.moviePromo
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchMovies());
+    dispatch(fetchPromoMovie());
   }
 });
 
