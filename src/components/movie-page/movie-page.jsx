@@ -13,7 +13,9 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById}) => {
   const film = films.find((item) => item.id === parseInt(id, 10));
 
   useEffect(() => {
-    onLoadFilmById(id);
+    if (!filmByIdLoaded || filmById.id !== id) {
+      onLoadFilmById(id);
+    }
   }, [id]);
 
   if (!filmByIdLoaded) {
@@ -83,7 +85,7 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById}) => {
 
             <div className="movie-card__desc">
               <MovieTabs
-                film={film}
+                film={filmById}
               />
             </div>
           </div>
