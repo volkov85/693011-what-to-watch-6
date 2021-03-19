@@ -9,7 +9,9 @@ const initialState = {
   moviePromo: {},
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
-  email: ``
+  email: ``,
+  filmById: {},
+  filmByIdLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +25,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         films: getFilteredFilms([...state.films], state.selectedGenre)
+      };
+    case ActionType.LOAD_MOVIE:
+      return {
+        ...state,
+        filmById: action.payload,
+        filmByIdLoaded: true
       };
     case ActionType.RESET_MOVIE_LIST:
       return {

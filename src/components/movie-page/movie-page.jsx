@@ -1,21 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {MOVIE_PAGE_FILMS_COUNT} from '../../const';
+import {fetchMovie} from '../../store/api-actions';
 import MovieTabs from '../movie-tabs/movie-tabs';
 import MovieList from '../movie-list/movie-list';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-const MoviePage = ({films}) => {
+const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById}) => {
   const {id} = useParams();
   const film = films.find((item) => item.id === parseInt(id, 10));
+
+  useEffect(() => {
+    onLoadFilmById(id);
+  }, [id]);
+
+  if (!filmByIdLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={film.background_image} alt={film.name}/>
+            <img src={filmById.background_image} alt={filmById.name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -38,10 +50,10 @@ const MoviePage = ({films}) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{film.name}</h2>
+              <h2 className="movie-card__title">{filmById.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{film.genre}</span>
-                <span className="movie-card__year">{film.released}</span>
+                <span className="movie-card__genre">{filmById.genre}</span>
+                <span className="movie-card__year">{filmById.released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -66,7 +78,7 @@ const MoviePage = ({films}) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={film.poster_image} alt={film.name} width="218" height="327"/>
+              <img src={filmById.poster_image} alt={filmById.name} width="218" height="327"/>
             </div>
 
             <div className="movie-card__desc">
@@ -106,13 +118,23 @@ const MoviePage = ({films}) => {
 };
 
 MoviePage.propTypes = {
-  films: PropTypes.array.isRequired
+  films: PropTypes.array.isRequired,
+  filmById: PropTypes.object.isRequired,
+  filmByIdLoaded: PropTypes.bool.isRequired,
+  onLoadFilmById: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films
+  films: state.films,
+  filmById: state.filmById,
+  filmByIdLoaded: state.filmByIdLoaded
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadFilmById(id) {
+    dispatch(fetchMovie(id));
+  }
 });
 
 export {MoviePage};
-export default connect(mapStateToProps, null)(MoviePage);
-
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);

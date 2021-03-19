@@ -1,5 +1,6 @@
 import {ActionCreator} from './action';
 import {AuthorizationStatus} from '../const';
+import browserHistory from "../browser-history";
 
 export const fetchMovies = () => (dispatch, _getState, api) => {
   api.get(`/films`)
@@ -10,6 +11,16 @@ export const fetchPromoMovie = () => (dispatch, _getState, api) => {
   api.get(`/films/promo`)
     .then(({data}) => dispatch(ActionCreator.loadPromoMovie(data)));
 };
+
+export const fetchMovie = (id) => (dispatch, _getState, api) => (
+  api.get(`/films/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadMovie(data)))
+    .catch(({response}) => {
+      if (response.status === 404) {
+        browserHistory.push(`/404`);
+      }
+    })
+);
 
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(`/login`)
