@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {MOVIE_PAGE_FILMS_COUNT} from '../../const';
+import {MOVIE_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
 import {fetchMovie} from '../../store/api-actions';
 import MovieTabs from '../movie-tabs/movie-tabs';
 import MovieList from '../movie-list/movie-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById}) => {
+const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus}) => {
   const {id} = useParams();
   const film = films.find((item) => item.id === parseInt(id, 10));
 
@@ -71,7 +71,7 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById}) => {
                   </svg>
                   <span>My list</span>
                 </Link>
-                <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link>
+                {authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link> : ``}
               </div>
             </div>
           </div>
@@ -123,13 +123,15 @@ MoviePage.propTypes = {
   films: PropTypes.array.isRequired,
   filmById: PropTypes.object.isRequired,
   filmByIdLoaded: PropTypes.bool.isRequired,
-  onLoadFilmById: PropTypes.func.isRequired
+  onLoadFilmById: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   filmById: state.filmById,
-  filmByIdLoaded: state.filmByIdLoaded
+  filmByIdLoaded: state.filmByIdLoaded,
+  authorizationStatus: state.authorizationStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
