@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 
-const Review = ({rating, comment, user, date}) => {
+const Review = ({rating, comment, username, date}) => {
   const dateCorrect = dayjs(date).format(`YYYY-MM-DD`);
   const dateCorrectContent = dayjs(date).format(`MMMM DD, YYYY`);
 
@@ -11,7 +11,7 @@ const Review = ({rating, comment, user, date}) => {
       <blockquote className="review__quote">
         <p className="review__text">{comment}</p>
         <footer className="review__details">
-          <cite className="review__author">{user.name}</cite>
+          <cite className="review__author">{username}</cite>
           <time className="review__date" dateTime={dateCorrect}>{dateCorrectContent}</time>
         </footer>
       </blockquote>
@@ -23,7 +23,7 @@ const Review = ({rating, comment, user, date}) => {
 Review.propTypes = {
   rating: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
-  user: PropTypes.object.isRequired,
+  username: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired
 };
 

@@ -12,6 +12,8 @@ const initialState = {
   email: ``,
   filmById: {},
   filmByIdLoaded: false,
+  reviewsById: [],
+  reviewsByIdLoaded: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,6 +33,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         filmById: action.payload,
         filmByIdLoaded: true
+      };
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        reviewsById: action.payload,
+        reviewsByIdLoaded: true
       };
     case ActionType.RESET_MOVIE_LIST:
       return {

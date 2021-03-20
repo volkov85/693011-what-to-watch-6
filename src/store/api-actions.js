@@ -34,3 +34,9 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(() => dispatch(ActionCreator.storeUserLogin(email)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`/`)));
 };
+
+export const fetchReviews = (id) => (dispatch, _getState, api) => (
+  api.get(`comments/${id}`)
+    .then(({data})=> dispatch(ActionCreator.loadReviews(data)))
+    .catch()
+);

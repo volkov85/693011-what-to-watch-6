@@ -1,14 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import reviews from '../../mocks/reviews';
+import {connect} from 'react-redux';
+import {fetchReviews} from '../../store/api-actions';
 import {FilmTabNames} from "../../const";
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 
-const MovieTabs = ({film}) => {
+const MovieTabs = ({film, reviewsById, reviewsByIdLoaded, onLoadReviews}) => {
   const [activeTab, setActiveTab] = useState(FilmTabNames.OVERVIEW);
+
+  useEffect(() => {
+    if (!reviewsByIdLoaded || reviewsById.id !== film.id) {
+      onLoadReviews(film.id);
+    }
+  }, [film.id]);
 
   const getActiveTabContent = () => {
     switch (activeTab) {
@@ -25,7 +32,7 @@ const MovieTabs = ({film}) => {
       case `Reviews`:
         return (
           <MoviePageReviews
-            reviews={reviews.filter((item) => item.film_id === film.id)}
+            reviews={reviewsById}
           />
         );
       case `Overview`:
@@ -81,7 +88,23 @@ const MovieTabs = ({film}) => {
 };
 
 MovieTabs.propTypes = {
-  film: PropTypes.object.isRequired
+  film: PropTypes.object.isRequired,
+  reviewsById: PropTypes.array.isRequired,
+  reviewsByIdLoaded: PropTypes.bool.isRequired,
+  onLoadReviews: PropTypes.func.isRequired
 };
 
-export default MovieTabs;
+const mapStateToProps = (state) => ({
+  reviewsById: state.reviewsById,
+  reviewsByIdLoaded: state.reviewsByIdLoaded
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadReviews(reviews) {
+    dispatch(fetchReviews(reviews));
+  }
+});
+
+export {MovieTabs};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieTabs);
