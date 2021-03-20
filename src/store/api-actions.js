@@ -40,3 +40,8 @@ export const fetchReviews = (id) => (dispatch, _getState, api) => (
     .then(({data})=> dispatch(ActionCreator.loadReviews(data)))
     .catch()
 );
+
+export const addReview = (id, rating, comment) => (dispatch, _getState, api) => (
+  api.post(`/comments/${id}`, {rating, comment})
+    .then(() => dispatch(ActionCreator.redirectToRoute(`/films/${id}`)))
+);
