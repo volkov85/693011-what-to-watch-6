@@ -1,12 +1,17 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {addReview} from '../../store/api-actions';
 import {connect} from 'react-redux';
 import AddReviewForm from '../add-review-form/add-review-form';
 
-const AddReviewPage = ({films}) => {
+const AddReviewPage = ({films, onSubmit}) => {
   const {id} = useParams();
   const film = films.find((item) => item.id === parseInt(id, 10));
+
+  const handleSubmitClick = (rating, review) => {
+    onSubmit(id, rating, review);
+  };
 
   return (
     <section className="movie-card movie-card--full">
@@ -50,7 +55,7 @@ const AddReviewPage = ({films}) => {
       </div>
 
       <div className="add-review">
-        <AddReviewForm />
+        <AddReviewForm onSubmit={handleSubmitClick} />
       </div>
 
     </section>
@@ -58,12 +63,18 @@ const AddReviewPage = ({films}) => {
 };
 
 AddReviewPage.propTypes = {
-  films: PropTypes.array.isRequired
+  films: PropTypes.array.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: state.films
 });
 
-export {AddReviewPage};
-export default connect(mapStateToProps, null)(AddReviewPage);
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(id, rating, review) {
+    dispatch(addReview(id, rating, review));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddReviewPage);

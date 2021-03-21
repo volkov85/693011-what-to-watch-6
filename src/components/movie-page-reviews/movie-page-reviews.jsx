@@ -11,7 +11,7 @@ const MoviePageReviews = ({reviews}) => {
             key={item.id}
             rating={item.rating}
             comment={item.comment}
-            user={item.user}
+            username={item.user.name}
             date={item.date}
           />)}
       </div>
@@ -22,7 +22,7 @@ const MoviePageReviews = ({reviews}) => {
             key={item.id}
             rating={item.rating}
             comment={item.comment}
-            user={item.user}
+            username={item.user.name}
             date={item.date}
           />)}
       </div>
