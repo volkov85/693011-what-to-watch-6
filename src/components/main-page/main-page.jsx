@@ -7,9 +7,9 @@ import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import ShowMore from '../show-more/show-more';
-import {fetchMovies, fetchPromoMovie} from "../../store/api-actions";
+import {fetchMovies, fetchPromoMovie, logout} from "../../store/api-actions";
 
-const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, email, moviePromo}) => {
+const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, moviePromo, userInfo, onLogoutClick}) => {
   const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
   const handleShowMoreClick = () => setFilmsCount((currentCount) => currentCount + MAIN_PAGE_FILMS_COUNT);
 
@@ -50,7 +50,10 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, email, 
                 <div className="user-block__avatar">
                   <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
                 </div>
-                <p className="user-block">{email}</p>
+                <Link to="/mylist" className="catalog__title">{userInfo.email}</Link>
+                <div>
+                  <a className="catalog__title" href="#" onClick={onLogoutClick}>  Log out</a>
+                </div>
               </>
             }
             {
@@ -124,22 +127,26 @@ MainPage.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  moviePromo: PropTypes.object.isRequired
+  moviePromo: PropTypes.object.isRequired,
+  userInfo: PropTypes.object,
+  onLogoutClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   isDataLoaded: state.isDataLoaded,
   authorizationStatus: state.authorizationStatus,
-  email: state.email,
-  moviePromo: state.moviePromo
+  moviePromo: state.moviePromo,
+  userInfo: state.userInfo
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchMovies());
     dispatch(fetchPromoMovie());
+  },
+  onLogoutClick() {
+    dispatch(logout());
   }
 });
 

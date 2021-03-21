@@ -24,19 +24,20 @@ export const fetchMovie = (id) => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(`/login`)
+    .then(({data}) => dispatch(ActionCreator.getUserInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {});
 };
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => {
   api.post(`/login`, {email, password})
+    .then(({data}) => dispatch(ActionCreator.getUserInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.storeUserLogin(email)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`/`)));
 };
 
 export const fetchReviews = (id) => (dispatch, _getState, api) => (
-  api.get(`comments/${id}`)
+  api.get(`/comments/${id}`)
     .then(({data})=> dispatch(ActionCreator.loadReviews(data)))
     .catch()
 );
@@ -44,4 +45,10 @@ export const fetchReviews = (id) => (dispatch, _getState, api) => (
 export const addReview = (id, rating, comment) => (dispatch, _getState, api) => (
   api.post(`/comments/${id}`, {rating, comment})
     .then(() => dispatch(ActionCreator.redirectToRoute(`/films/${id}`)))
+);
+
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(`/logout`)
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(ActionCreator.getUserInfo({})))
 );

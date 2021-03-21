@@ -8,7 +8,7 @@ export const ActionType = {
   LOAD_REVIEWS: `data/loadReviews`,
   REQUIRE_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
-  STORE_USER_LOGIN: `user/storeUserLogin`,
+  GET_USER_INFO: `/getUserInfo`
 };
 
 export const ActionCreator = {
@@ -46,8 +46,8 @@ export const ActionCreator = {
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url
   }),
-  storeUserLogin: (email) => ({
-    type: ActionType.STORE_USER_LOGIN,
-    payload: email
+  getUserInfo: (userInfo) => ({
+    type: ActionType.GET_USER_INFO,
+    payload: userInfo,
   })
 };

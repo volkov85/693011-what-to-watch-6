@@ -3,12 +3,12 @@ import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {MOVIE_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
-import {fetchMovie} from '../../store/api-actions';
+import {fetchMovie, logout} from '../../store/api-actions';
 import MovieTabs from '../movie-tabs/movie-tabs';
 import MovieList from '../movie-list/movie-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus}) => {
+const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, userInfo, authorizationStatus, onLogoutClick}) => {
   const {id} = useParams();
   const film = films.find((item) => item.id === parseInt(id, 10));
 
@@ -42,11 +42,23 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
                 <span className="logo__letter logo__letter--3">W</span>
               </Link>
             </div>
-
             <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
+              {
+                authorizationStatus === AuthorizationStatus.AUTH &&
+                <>
+                  <div className="user-block__avatar">
+                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+                  </div>
+                  <Link to="/mylist" className="catalog__title">{userInfo.email}</Link>
+                  <div>
+                    <a className="catalog__title" href="#" onClick={onLogoutClick}>  Log out</a>
+                  </div>
+                </>
+              }
+              {
+                authorizationStatus === AuthorizationStatus.NO_AUTH &&
+                <Link to="/login" className="user-block__link">Sign in</Link>
+              }
             </div>
           </header>
 
@@ -124,19 +136,25 @@ MoviePage.propTypes = {
   filmById: PropTypes.object.isRequired,
   filmByIdLoaded: PropTypes.bool.isRequired,
   onLoadFilmById: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
+  authorizationStatus: PropTypes.string.isRequired,
+  userInfo: PropTypes.object,
+  onLogoutClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   filmById: state.filmById,
   filmByIdLoaded: state.filmByIdLoaded,
-  authorizationStatus: state.authorizationStatus
+  authorizationStatus: state.authorizationStatus,
+  userInfo: state.userInfo
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadFilmById(id) {
     dispatch(fetchMovie(id));
+  },
+  onLogoutClick() {
+    dispatch(logout());
   }
 });
 

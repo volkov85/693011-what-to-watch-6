@@ -9,11 +9,11 @@ const initialState = {
   moviePromo: {},
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
-  email: ``,
   filmById: {},
   filmByIdLoaded: false,
   reviewsById: [],
-  reviewsByIdLoaded: false
+  reviewsByIdLoaded: false,
+  userInfo: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -62,10 +62,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
       };
-    case ActionType.STORE_USER_LOGIN:
+    case ActionType.GET_USER_INFO:
       return {
         ...state,
-        email: action.payload,
+        userInfo: action.payload,
       };
     default: return state;
   }
