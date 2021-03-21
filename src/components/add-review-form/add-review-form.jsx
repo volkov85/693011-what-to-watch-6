@@ -26,7 +26,7 @@ const AddReviewForm = ({onSubmit}) => {
 
   return (
     <>
-      <form action="#" className="add-review__form">
+      <form action="#" className="add-review__form" onSubmit={handleSubmitClick}>
         <div className="rating">
           <div className="rating__stars">
             {stars}
@@ -35,7 +35,7 @@ const AddReviewForm = ({onSubmit}) => {
         <div className="add-review__text">
           <textarea className="add-review__textarea" name="review" id="review" placeholder="Review text" value={review} onChange={(evt) => setReview(evt.target.value)}/>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" onClick={handleSubmitClick}>Post</button>
+            <button className="add-review__btn" type="submit">Post</button>
           </div>
         </div>
       </form>
