@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {MAIN_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
+import {MAIN_PAGE_FILMS_COUNT} from '../../const';
 import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import ShowMore from '../show-more/show-more';
-import {fetchMovies, fetchPromoMovie, logout} from "../../store/api-actions";
+import {fetchMovies, fetchPromoMovie} from "../../store/api-actions";
+import Header from '../header/header';
 
-const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, moviePromo, userInfo, onLogoutClick}) => {
+const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
   const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
   const handleShowMoreClick = () => setFilmsCount((currentCount) => currentCount + MAIN_PAGE_FILMS_COUNT);
 
@@ -34,34 +34,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, authorizationStatus, moviePr
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header movie-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="user-block">
-            {
-              authorizationStatus === AuthorizationStatus.AUTH &&
-              <>
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-                </div>
-                <Link to="/mylist" className="catalog__title">{userInfo.email}</Link>
-                <div>
-                  <a className="catalog__title" href="#" onClick={onLogoutClick}>  Log out</a>
-                </div>
-              </>
-            }
-            {
-              authorizationStatus === AuthorizationStatus.NO_AUTH &&
-              <Link to="/login" className="user-block__link">Sign in</Link>
-            }
-          </div>
-        </header>
+        <Header />
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">
@@ -126,27 +99,19 @@ MainPage.propTypes = {
   films: PropTypes.array.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
   moviePromo: PropTypes.object.isRequired,
-  userInfo: PropTypes.object,
-  onLogoutClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
   isDataLoaded: state.isDataLoaded,
-  authorizationStatus: state.authorizationStatus,
-  moviePromo: state.moviePromo,
-  userInfo: state.userInfo
+  moviePromo: state.moviePromo
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchMovies());
     dispatch(fetchPromoMovie());
-  },
-  onLogoutClick() {
-    dispatch(logout());
   }
 });
 
