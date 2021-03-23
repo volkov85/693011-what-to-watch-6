@@ -1,22 +1,20 @@
-import {ActionType} from './action';
-import {FILTER_ALL_GENRES, AuthorizationStatus} from '../const';
-import {getFilteredFilms} from '../utils';
+import {ActionType} from '../action';
+import {FILTER_ALL_GENRES} from '../../const';
+import {getFilteredFilms} from '../../utils/utils';
 
 const initialState = {
   selectedGenre: FILTER_ALL_GENRES,
   initialFilms: [],
   films: [],
   moviePromo: {},
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
   isDataLoaded: false,
   filmById: {},
   filmByIdLoaded: false,
   reviewsById: [],
   reviewsByIdLoaded: false,
-  userInfo: null
 };
 
-const reducer = (state = initialState, action) => {
+const data = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_GENRE:
       return {
@@ -27,6 +25,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         films: getFilteredFilms([...state.films], state.selectedGenre)
+      };
+    case ActionType.RESET_MOVIE_LIST:
+      return {
+        ...state,
+        films: state.initialFilms
       };
     case ActionType.LOAD_MOVIE:
       return {
@@ -40,11 +43,6 @@ const reducer = (state = initialState, action) => {
         reviewsById: action.payload,
         reviewsByIdLoaded: true
       };
-    case ActionType.RESET_MOVIE_LIST:
-      return {
-        ...state,
-        films: state.initialFilms
-      };
     case ActionType.LOAD_MOVIES:
       return {
         ...state,
@@ -57,18 +55,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         moviePromo: action.payload,
       };
-    case ActionType.REQUIRE_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-    case ActionType.GET_USER_INFO:
-      return {
-        ...state,
-        userInfo: action.payload,
-      };
     default: return state;
   }
 };
 
-export {reducer};
+export {data};

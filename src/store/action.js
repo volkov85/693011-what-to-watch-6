@@ -1,7 +1,7 @@
 export const ActionType = {
-  CHANGE_GENRE: `movies/changeGenre`,
-  GET_MOVIE_LIST: `movies/getMovieList`,
-  RESET_MOVIE_LIST: `movies/resetMovieList`,
+  CHANGE_GENRE: `data/changeGenre`,
+  GET_MOVIE_LIST: `data/getMovieList`,
+  RESET_MOVIE_LIST: `data/resetMovieList`,
   LOAD_MOVIES: `data/loadMovies`,
   LOAD_PROMO_MOVIE: `data/loadPromoMovie`,
   LOAD_MOVIE: `data/loadMovie`,

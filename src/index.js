@@ -9,7 +9,7 @@ import {requireAuthorization} from './store/action';
 import {createAPI} from './services/api';
 import {checkAuth} from './store/api-actions';
 import App from './components/app/app';
-import {reducer} from './store/reducer';
+import rootReducer from './store/root-reducer';
 import {redirect} from './store/middlewares/redirect';
 
 const api = createAPI(
@@ -17,7 +17,7 @@ const api = createAPI(
 );
 
 const store = createStore(
-    reducer,
+    rootReducer,
     composeWithDevTools(
         applyMiddleware(thunk.withExtraArgument(api)),
         applyMiddleware(redirect)

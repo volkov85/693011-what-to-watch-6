@@ -94,9 +94,9 @@ MovieTabs.propTypes = {
   onLoadReviews: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  reviewsById: state.reviewsById,
-  reviewsByIdLoaded: state.reviewsByIdLoaded
+const mapStateToProps = ({DATA}) => ({
+  reviewsById: DATA.reviewsById,
+  reviewsByIdLoaded: DATA.reviewsByIdLoaded
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -54,8 +54,8 @@ MyList.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films
+const mapStateToProps = ({DATA}) => ({
+  films: DATA.films
 });
 
 export {MyList};

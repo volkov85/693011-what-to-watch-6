@@ -8,7 +8,6 @@ const VideoPlayer = ({previewVideoLink, previewImage, muted, auto}) => {
       width="100%"
       autoPlay={auto}
       muted={muted}
-      controls
       poster={previewImage}>
       <source
         src={previewVideoLink}

@@ -67,8 +67,8 @@ AddReviewPage.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films
+const mapStateToProps = ({DATA}) => ({
+  films: DATA.films
 });
 
 const mapDispatchToProps = (dispatch) => ({

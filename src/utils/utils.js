@@ -1,4 +1,4 @@
-import {FILTER_ALL_GENRES} from './const';
+import {FILTER_ALL_GENRES} from '../const';
 
 const getUniqueGenres = (films) => {
   const genres = films.map((item) => item.genre);

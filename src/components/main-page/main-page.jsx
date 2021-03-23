@@ -102,10 +102,10 @@ MainPage.propTypes = {
   moviePromo: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films,
-  isDataLoaded: state.isDataLoaded,
-  moviePromo: state.moviePromo
+const mapStateToProps = ({DATA}) => ({
+  films: DATA.films,
+  isDataLoaded: DATA.isDataLoaded,
+  moviePromo: DATA.moviePromo
 });
 
 const mapDispatchToProps = (dispatch) => ({
