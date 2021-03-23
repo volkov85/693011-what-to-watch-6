@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {addReview} from '../../store/api-actions';
 import {connect} from 'react-redux';
 import AddReviewForm from '../add-review-form/add-review-form';
+import {getFilms} from '../../store/data/selectors';
 
 const AddReviewPage = ({films, onSubmit}) => {
   const {id} = useParams();
@@ -67,8 +68,8 @@ AddReviewPage.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({DATA}) => ({
-  films: DATA.films
+const mapStateToProps = (state) => ({
+  films: getFilms(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

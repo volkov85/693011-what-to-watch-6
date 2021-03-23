@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {AuthorizationStatus} from '../../const';
 import {logout} from '../../store/api-actions';
+import {getUserInfo, getAuthorizationStatus} from '../../store/user/selectors';
 
 const Header = ({userInfo, authorizationStatus, onLogoutClick}) => {
   return (
@@ -44,9 +45,9 @@ Header.propTypes = {
   onLogoutClick: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
-  userInfo: USER.userInfo
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  userInfo: getUserInfo(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

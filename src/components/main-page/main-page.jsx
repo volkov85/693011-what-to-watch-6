@@ -8,6 +8,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import ShowMore from '../show-more/show-more';
 import {fetchMovies, fetchPromoMovie} from "../../store/api-actions";
 import Header from '../header/header';
+import {getFilms, getDataStatus, getMoviePromo} from '../../store/data/selectors';
 
 const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
   const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
@@ -102,10 +103,10 @@ MainPage.propTypes = {
   moviePromo: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  films: DATA.films,
-  isDataLoaded: DATA.isDataLoaded,
-  moviePromo: DATA.moviePromo
+const mapStateToProps = (state) => ({
+  films: getFilms(state),
+  isDataLoaded: getDataStatus(state),
+  moviePromo: getMoviePromo(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

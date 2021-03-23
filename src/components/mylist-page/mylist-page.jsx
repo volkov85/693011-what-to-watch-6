@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from "prop-types";
 import MovieCard from "../movie-card/movie-card";
 import Header from '../header/header';
+import {getFilms} from '../../store/data/selectors';
 
 const MyList = ({films}) => {
   const [filmActive, setFilmActive] = useState(null);
@@ -54,8 +55,8 @@ MyList.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-const mapStateToProps = ({DATA}) => ({
-  films: DATA.films
+const mapStateToProps = (state) => ({
+  films: getFilms(state)
 });
 
 export {MyList};

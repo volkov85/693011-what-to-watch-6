@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {resetMovieList, changeGenre, getMovieList} from '../../store/action';
 import {getUniqueGenres} from '../../utils/utils';
+import {getSelectedGenre, getInitialFilms} from '../../store/data/selectors';
 
 const GenreList = ({genres, selectedGenre, handleSelectGenre}) => {
   return (
@@ -30,9 +31,9 @@ GenreList.propTypes = {
   handleSelectGenre: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({DATA}) => ({
-  genres: getUniqueGenres(DATA.initialFilms),
-  selectedGenre: DATA.selectedGenre
+const mapStateToProps = (state) => ({
+  genres: getUniqueGenres(getInitialFilms(state)),
+  selectedGenre: getSelectedGenre(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

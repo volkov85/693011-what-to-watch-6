@@ -8,6 +8,8 @@ import MovieTabs from '../movie-tabs/movie-tabs';
 import MovieList from '../movie-list/movie-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header/header';
+import {getFilms, getFilmById, getFilmByIdStatus} from '../../store/data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus}) => {
   const {id} = useParams();
@@ -114,11 +116,11 @@ MoviePage.propTypes = {
   authorizationStatus: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({DATA, USER}) => ({
-  films: DATA.films,
-  filmById: DATA.filmById,
-  filmByIdLoaded: DATA.filmByIdLoaded,
-  authorizationStatus: USER.authorizationStatus
+const mapStateToProps = (state) => ({
+  films: getFilms(state),
+  filmById: getFilmById(state),
+  filmByIdLoaded: getFilmByIdStatus(state),
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

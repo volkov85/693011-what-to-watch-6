@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
+import {getFilms} from '../../store/data/selectors';
 
 const PlayerPage = ({films}) => {
   const {id} = useParams();
@@ -47,8 +48,8 @@ PlayerPage.propTypes = {
   films: PropTypes.array.isRequired
 };
 
-const mapStateToProps = ({DATA}) => ({
-  films: DATA.films
+const mapStateToProps = (state) => ({
+  films: getFilms(state)
 });
 
 export {PlayerPage};
