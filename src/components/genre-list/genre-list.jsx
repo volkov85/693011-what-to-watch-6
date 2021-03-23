@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {ActionCreator} from '../../store/action';
+import {resetMovieList, changeGenre, getMovieList} from '../../store/action';
 import {getUniqueGenres} from '../../utils';
 
 const GenreList = ({genres, selectedGenre, handleSelectGenre}) => {
@@ -37,9 +37,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   handleSelectGenre(genre) {
-    dispatch(ActionCreator.resetMovieList());
-    dispatch(ActionCreator.changeGenre(genre));
-    dispatch(ActionCreator.getMovieList());
+    dispatch(resetMovieList());
+    dispatch(changeGenre(genre));
+    dispatch(getMovieList());
   }
 });
 

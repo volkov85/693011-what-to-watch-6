@@ -8,46 +8,53 @@ export const ActionType = {
   LOAD_REVIEWS: `data/loadReviews`,
   REQUIRE_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
-  GET_USER_INFO: `/getUserInfo`
+  GET_USER_INFO: `user/getUserInfo`
 };
 
-export const ActionCreator = {
-  changeGenre: (genre) => ({
-    type: ActionType.CHANGE_GENRE,
-    payload: genre
-  }),
-  getMovieList: () => ({
-    type: ActionType.GET_MOVIE_LIST
-  }),
-  resetMovieList: () => ({
-    type: ActionType.RESET_MOVIE_LIST
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRE_AUTHORIZATION,
-    payload: status
-  }),
-  loadMovies: (movies) => ({
-    type: ActionType.LOAD_MOVIES,
-    payload: movies
-  }),
-  loadPromoMovie: (movie) => ({
-    type: ActionType.LOAD_PROMO_MOVIE,
-    payload: movie
-  }),
-  loadMovie: (filmById) => ({
-    type: ActionType.LOAD_MOVIE,
-    payload: filmById
-  }),
-  loadReviews: (reviewsById) => ({
-    type: ActionType.LOAD_REVIEWS,
-    payload: reviewsById
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url
-  }),
-  getUserInfo: (userInfo) => ({
-    type: ActionType.GET_USER_INFO,
-    payload: userInfo,
-  })
-};
+export const changeGenre = (genre) => ({
+  type: ActionType.CHANGE_GENRE,
+  payload: genre
+});
+
+export const getMovieList = () => ({
+  type: ActionType.GET_MOVIE_LIST
+});
+
+export const resetMovieList = () => ({
+  type: ActionType.RESET_MOVIE_LIST
+});
+
+export const requireAuthorization = (status) => ({
+  type: ActionType.REQUIRE_AUTHORIZATION,
+  payload: status
+});
+
+export const loadMovies = (movies) => ({
+  type: ActionType.LOAD_MOVIES,
+  payload: movies
+});
+
+export const loadPromoMovie = (movie) => ({
+  type: ActionType.LOAD_PROMO_MOVIE,
+  payload: movie
+});
+
+export const loadMovie = (filmById) => ({
+  type: ActionType.LOAD_MOVIE,
+  payload: filmById
+});
+
+export const loadReviews = (reviewsById) => ({
+  type: ActionType.LOAD_REVIEWS,
+  payload: reviewsById
+});
+
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url
+});
+
+export const getUserInfo = (userInfo) => ({
+  type: ActionType.GET_USER_INFO,
+  payload: userInfo,
+});
