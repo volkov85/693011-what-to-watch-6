@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {getFilms} from '../../store/data/selectors';
+import VideoPlayer from '../video-player/video-player';
 
 const PlayerPage = ({films}) => {
   const {id} = useParams();
@@ -10,7 +11,12 @@ const PlayerPage = ({films}) => {
 
   return (
     <div className="player">
-      <video src={film.video_link} className="player__video" poster="img/player-poster.jpg"/>
+      <VideoPlayer
+        muted={false}
+        auto={true}
+        previewImage={`img/player-poster.jpg`}
+        previewVideoLink={`${film.video_link}`}
+      />
 
       <button type="button" className="player__exit">Exit</button>
 

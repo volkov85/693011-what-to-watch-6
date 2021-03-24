@@ -9,6 +9,7 @@ import ShowMore from '../show-more/show-more';
 import {fetchMovies, fetchPromoMovie} from "../../store/api-actions";
 import Header from '../header/header';
 import {getFilms, getDataStatus, getMoviePromo} from '../../store/data/selectors';
+import {Link} from 'react-router-dom';
 
 const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
   const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
@@ -55,7 +56,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"/>
                   </svg>
-                  <span>Play</span>
+                  <Link to={`/player/${moviePromo.id}`}>Play</Link>
                 </button>
                 <button className="btn btn--list movie-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
