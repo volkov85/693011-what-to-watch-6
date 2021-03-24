@@ -5,9 +5,11 @@ import {Link} from 'react-router-dom';
 const VideoCover = ({previewImage, name, id}) => {
   return (
     <>
-      <div className="small-movie-card__image">
-        <img src={previewImage} alt={name} width="280" height="175" />
-      </div>
+      <Link to={`/films/${id}`}>
+        <div className="small-movie-card__image">
+          <img src={previewImage} alt={name} width="280" height="175" />
+        </div>
+      </Link>
       <h3 className="small-movie-card__title">
         <Link to={`/films/${id}`} className="small-movie-card__link">{name}</Link>
       </h3>

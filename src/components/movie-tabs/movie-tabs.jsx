@@ -7,6 +7,7 @@ import {FilmTabNames} from "../../const";
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
+import {getReviewsById, getReviewsByIdStatus} from '../../store/data/selectors';
 
 const MovieTabs = ({film, reviewsById, reviewsByIdLoaded, onLoadReviews}) => {
   const [activeTab, setActiveTab] = useState(FilmTabNames.OVERVIEW);
@@ -95,8 +96,8 @@ MovieTabs.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  reviewsById: state.reviewsById,
-  reviewsByIdLoaded: state.reviewsByIdLoaded
+  reviewsById: getReviewsById(state),
+  reviewsByIdLoaded: getReviewsByIdStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

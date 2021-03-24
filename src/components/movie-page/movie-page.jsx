@@ -7,6 +7,9 @@ import {fetchMovie} from '../../store/api-actions';
 import MovieTabs from '../movie-tabs/movie-tabs';
 import MovieList from '../movie-list/movie-list';
 import LoadingScreen from '../loading-screen/loading-screen';
+import Header from '../header/header';
+import {getFilms, getFilmById, getFilmByIdStatus} from '../../store/data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus}) => {
   const {id} = useParams();
@@ -34,21 +37,7 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <header className="page-header movie-card__head">
-            <div className="logo">
-              <Link to="/" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </Link>
-            </div>
-
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </div>
-          </header>
+          <Header />
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
@@ -128,10 +117,10 @@ MoviePage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
-  filmById: state.filmById,
-  filmByIdLoaded: state.filmByIdLoaded,
-  authorizationStatus: state.authorizationStatus
+  films: getFilms(state),
+  filmById: getFilmById(state),
+  filmByIdLoaded: getFilmByIdStatus(state),
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

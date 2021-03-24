@@ -1,20 +1,20 @@
-import {ActionCreator} from './action';
+import {loadMovies, loadPromoMovie, loadMovie, getUserInfo, requireAuthorization, redirectToRoute, loadReviews} from './action';
 import {AuthorizationStatus} from '../const';
 import browserHistory from "../browser-history";
 
 export const fetchMovies = () => (dispatch, _getState, api) => {
   api.get(`/films`)
-    .then(({data}) => dispatch(ActionCreator.loadMovies(data)));
+    .then(({data}) => dispatch(loadMovies(data)));
 };
 
 export const fetchPromoMovie = () => (dispatch, _getState, api) => {
   api.get(`/films/promo`)
-    .then(({data}) => dispatch(ActionCreator.loadPromoMovie(data)));
+    .then(({data}) => dispatch(loadPromoMovie(data)));
 };
 
 export const fetchMovie = (id) => (dispatch, _getState, api) => (
   api.get(`/films/${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadMovie(data)))
+    .then(({data}) => dispatch(loadMovie(data)))
     .catch(({response}) => {
       if (response.status === 404) {
         browserHistory.push(`/404`);
@@ -24,24 +24,31 @@ export const fetchMovie = (id) => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => {
   api.get(`/login`)
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(({data}) => dispatch(getUserInfo(data)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {});
 };
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => {
   api.post(`/login`, {email, password})
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.storeUserLogin(email)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(`/`)));
+    .then(({data}) => dispatch(getUserInfo(data)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(`/`)));
 };
 
 export const fetchReviews = (id) => (dispatch, _getState, api) => (
-  api.get(`comments/${id}`)
-    .then(({data})=> dispatch(ActionCreator.loadReviews(data)))
+  api.get(`/comments/${id}`)
+    .then(({data})=> dispatch(loadReviews(data)))
     .catch()
 );
 
 export const addReview = (id, rating, comment) => (dispatch, _getState, api) => (
   api.post(`/comments/${id}`, {rating, comment})
-    .then(() => dispatch(ActionCreator.redirectToRoute(`/films/${id}`)))
+    .then(() => dispatch(redirectToRoute(`/films/${id}`)))
+);
+
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(`/logout`)
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(getUserInfo({})))
 );
