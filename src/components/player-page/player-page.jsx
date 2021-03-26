@@ -3,9 +3,13 @@ import PropTypes from "prop-types";
 import {connect} from 'react-redux';
 import {useParams, useHistory} from 'react-router-dom';
 import {getFilms} from '../../store/data/selectors';
+import {getTimeLeft} from "../../utils/utils";
 
 const PlayerPage = ({films}) => {
   const [isPlay, setIsPlay] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [progressBarValue, setProgressBarValue] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(` `);
   const videoRef = useRef();
   const history = useHistory();
   const {id} = useParams();
@@ -24,6 +28,21 @@ const PlayerPage = ({films}) => {
     setIsPlay(!isPlay);
   };
 
+  const handleFullScreenButtonClick = () => {
+    if (!isFullScreen) {
+      videoRef.current.requestFullscreen();
+      setIsFullScreen(true);
+    } else {
+      videoRef.current.exitFullscreen();
+      setIsFullScreen(false);
+    }
+  };
+
+  const handleProgressBarUpdate = () => {
+    setProgressBarValue((videoRef.current.currentTime / videoRef.current.duration) * 100);
+    setTimeLeft(getTimeLeft(videoRef.current.duration - videoRef.current.currentTime));
+  };
+
   return (
     <div className="player">
       <video
@@ -34,6 +53,7 @@ const PlayerPage = ({films}) => {
         width={`100%`}
         height={`100%`}
         onClick={handlePlayButtonClick}
+        onTimeUpdate={handleProgressBarUpdate}
       />
 
       <button type="button" className="player__exit" onClick={() => history.goBack()} >Exit</button>
@@ -41,10 +61,10 @@ const PlayerPage = ({films}) => {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"/>
-            <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
+            <progress className="player__progress" value={progressBarValue} max="100"/>
+            <div className="player__toggler" style={{left: `${progressBarValue}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{timeLeft}</div>
         </div>
 
         <div className="player__controls-row">
@@ -70,7 +90,10 @@ const PlayerPage = ({films}) => {
           }
           <div className="player__name">{film.name}</div>
 
-          <button type="button" className="player__full-screen">
+          <button
+            type="button"
+            className="player__full-screen"
+            onClick={handleFullScreenButtonClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"/>
             </svg>
