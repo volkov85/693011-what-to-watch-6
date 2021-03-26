@@ -6,14 +6,15 @@ import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import ShowMore from '../show-more/show-more';
-import {fetchMovies, fetchPromoMovie} from "../../store/api-actions";
+import {fetchMovies, fetchPromoMovie, addToFavorites} from "../../store/api-actions";
 import Header from '../header/header';
 import {getFilms, getDataStatus, getMoviePromo} from '../../store/data/selectors';
 import {Link} from 'react-router-dom';
 
-const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
+const MainPage = ({films, isDataLoaded, onLoadData, moviePromo, handleAddToFavoriteClick}) => {
   const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
   const handleShowMoreClick = () => setFilmsCount((currentCount) => currentCount + MAIN_PAGE_FILMS_COUNT);
+  const isMyList = false;
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -36,7 +37,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header />
+        <Header isMyList={isMyList}/>
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">
@@ -58,12 +59,14 @@ const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to="/mylist" className="btn btn--list movie-card__button" type="button">
+                <button className="btn btn--list movie-card__button" type="button" onClick={() => {
+                  handleAddToFavoriteClick(moviePromo.id, Number(!moviePromo.isFavorite));
+                }}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"/>
                   </svg>
                   <span>My list</span>
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -102,6 +105,7 @@ MainPage.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
   moviePromo: PropTypes.object.isRequired,
+  handleAddToFavoriteClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -114,6 +118,9 @@ const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchMovies());
     dispatch(fetchPromoMovie());
+  },
+  handleAddToFavoriteClick(id, status) {
+    dispatch(addToFavorites(id, status));
   }
 });
 

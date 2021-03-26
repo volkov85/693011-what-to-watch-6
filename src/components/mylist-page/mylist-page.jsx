@@ -10,6 +10,7 @@ import LoadingScreen from "../loading-screen/loading-screen";
 
 const MyList = ({favoriteFilms, onLoadData, isFavoriteLoaded}) => {
   const [filmActive, setFilmActive] = useState(null);
+  const isMyList = true;
 
   useEffect(() => {
     if (!isFavoriteLoaded) {
@@ -29,7 +30,7 @@ const MyList = ({favoriteFilms, onLoadData, isFavoriteLoaded}) => {
 
   return (
     <div className="user-page">
-      <Header />
+      <Header isMyList={isMyList}/>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
