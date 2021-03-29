@@ -6,9 +6,9 @@ import {AuthorizationStatus} from '../../const';
 import {logout} from '../../store/api-actions';
 import {getUserInfo, getAuthorizationStatus} from '../../store/user/selectors';
 
-const Header = ({userInfo, authorizationStatus, onLogoutClick}) => {
+const Header = ({userInfo, authorizationStatus, handleLogoutClick, isMyList}) => {
   return (
-    <header className="page-header movie-card__head">
+    <header className="page-header user-page__head">
       <div className="logo">
         <Link to="/" className="logo__link">
           <span className="logo__letter logo__letter--1">W</span>
@@ -17,6 +17,9 @@ const Header = ({userInfo, authorizationStatus, onLogoutClick}) => {
         </Link>
       </div>
 
+      {
+        isMyList ? <h1 className="page-title user-page__title">My list</h1> : ``
+      }
       <div className="user-block">
         {
           authorizationStatus === AuthorizationStatus.AUTH &&
@@ -26,7 +29,7 @@ const Header = ({userInfo, authorizationStatus, onLogoutClick}) => {
             </div>
             <Link to="/mylist" className="catalog__title">{userInfo.email}</Link>
             <div>
-              <a className="catalog__title" href="#" onClick={onLogoutClick}>  Log out</a>
+              <a className="catalog__title" href="#" onClick={handleLogoutClick}>  Log out</a>
             </div>
           </>
         }
@@ -42,7 +45,8 @@ const Header = ({userInfo, authorizationStatus, onLogoutClick}) => {
 Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   userInfo: PropTypes.object,
-  onLogoutClick: PropTypes.func.isRequired
+  handleLogoutClick: PropTypes.func.isRequired,
+  isMyList: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -51,7 +55,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLogoutClick() {
+  handleLogoutClick() {
     dispatch(logout());
   }
 });

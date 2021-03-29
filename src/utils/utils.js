@@ -15,4 +15,11 @@ const getFilteredFilms = (films, genre) => {
   }
 };
 
-export {getUniqueGenres, getFilteredFilms};
+const getTimeLeft = (secondsCurrent) => {
+  const hours = Math.floor(secondsCurrent / 60 / 60);
+  const minutes = Math.floor(secondsCurrent / 60) - (hours * 60);
+  const seconds = Math.floor(secondsCurrent % 60);
+  return `${hours}:${minutes}:${seconds}`;
+};
+
+export {getUniqueGenres, getFilteredFilms, getTimeLeft};

@@ -6,10 +6,16 @@ export const ActionType = {
   LOAD_PROMO_MOVIE: `data/loadPromoMovie`,
   LOAD_MOVIE: `data/loadMovie`,
   LOAD_REVIEWS: `data/loadReviews`,
+  LOAD_FAVORITE_MOVIES: `data/loadFavoriteMovies`,
   REQUIRE_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
   GET_USER_INFO: `user/getUserInfo`
 };
+
+export const loadFavoriteMovies = (favoriteFilms) => ({
+  type: ActionType.LOAD_FAVORITE_MOVIES,
+  payload: favoriteFilms,
+});
 
 export const changeGenre = (genre) => ({
   type: ActionType.CHANGE_GENRE,

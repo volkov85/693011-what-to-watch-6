@@ -1,13 +1,28 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import PropTypes from "prop-types";
 import MovieCard from "../movie-card/movie-card";
 import Header from '../header/header';
-import {getFilms} from '../../store/data/selectors';
+import {getFavoriteMovies, getFavoriteLoadStatus} from '../../store/data/selectors';
+import {fetchFavoriteMovies} from "../../store/api-actions";
+import LoadingScreen from "../loading-screen/loading-screen";
 
-const MyList = ({films}) => {
+const MyList = ({favoriteFilms, onLoadData, isFavoriteLoaded}) => {
   const [filmActive, setFilmActive] = useState(null);
+  const isMyList = true;
+
+  useEffect(() => {
+    if (!isFavoriteLoaded) {
+      onLoadData();
+    }
+  }, [isFavoriteLoaded]);
+
+  if (!isFavoriteLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   const handleMouseEnterCard = (id) => {
     setFilmActive(id);
@@ -15,13 +30,13 @@ const MyList = ({films}) => {
 
   return (
     <div className="user-page">
-      <Header />
+      <Header isMyList={isMyList}/>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__movies-list">
           {
-            films.map((item) => <MovieCard
+            favoriteFilms.map((item) => <MovieCard
               key={item.id}
               name={item.name}
               previewImage={item.preview_image}
@@ -52,12 +67,21 @@ const MyList = ({films}) => {
 };
 
 MyList.propTypes = {
-  films: PropTypes.array.isRequired
+  favoriteFilms: PropTypes.array.isRequired,
+  isFavoriteLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  films: getFilms(state)
+  favoriteFilms: getFavoriteMovies(state),
+  isFavoriteLoaded: getFavoriteLoadStatus(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchFavoriteMovies());
+  }
 });
 
 export {MyList};
-export default connect(mapStateToProps, null)(MyList);
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);

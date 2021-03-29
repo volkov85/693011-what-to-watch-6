@@ -3,7 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {MOVIE_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
-import {fetchMovie} from '../../store/api-actions';
+import {fetchMovie, addToFavorites} from '../../store/api-actions';
 import MovieTabs from '../movie-tabs/movie-tabs';
 import MovieList from '../movie-list/movie-list';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -11,9 +11,10 @@ import Header from '../header/header';
 import {getFilms, getFilmById, getFilmByIdStatus} from '../../store/data/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
-const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus}) => {
+const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus, handleAddToFavoriteClick}) => {
   const {id} = useParams();
   const film = films.find((item) => item.id === parseInt(id, 10));
+  const isMyList = false;
 
   useEffect(() => {
     if (!filmByIdLoaded || filmById.id !== id) {
@@ -37,7 +38,7 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header />
+          <Header isMylist={isMyList}/>
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
@@ -48,18 +49,20 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <Link to={`/player/${filmById.id}`} className="btn btn--play movie-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"/>
                   </svg>
                   <span>Play</span>
-                </button>
-                <Link to="/mylist" className="btn btn--list movie-card__button" type="button">
+                </Link>
+                <button className="btn btn--list movie-card__button" type="button" onClick={() => {
+                  handleAddToFavoriteClick(filmById.id, Number(!filmById.isFavorite));
+                }}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"/>
                   </svg>
                   <span>My list</span>
-                </Link>
+                </button>
                 {authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link> : ``}
               </div>
             </div>
@@ -113,7 +116,8 @@ MoviePage.propTypes = {
   filmById: PropTypes.object.isRequired,
   filmByIdLoaded: PropTypes.bool.isRequired,
   onLoadFilmById: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
+  authorizationStatus: PropTypes.string.isRequired,
+  handleAddToFavoriteClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -126,6 +130,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onLoadFilmById(id) {
     dispatch(fetchMovie(id));
+  },
+  handleAddToFavoriteClick(id, status) {
+    dispatch(addToFavorites(id, status));
   }
 });
 

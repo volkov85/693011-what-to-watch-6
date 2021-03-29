@@ -1,4 +1,4 @@
-import {loadMovies, loadPromoMovie, loadMovie, getUserInfo, requireAuthorization, redirectToRoute, loadReviews} from './action';
+import {loadMovies, loadFavoriteMovies, loadPromoMovie, loadMovie, getUserInfo, requireAuthorization, redirectToRoute, loadReviews} from './action';
 import {AuthorizationStatus} from '../const';
 import browserHistory from "../browser-history";
 
@@ -6,6 +6,16 @@ export const fetchMovies = () => (dispatch, _getState, api) => {
   api.get(`/films`)
     .then(({data}) => dispatch(loadMovies(data)));
 };
+
+export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
+  api.get(`/favorite`)
+    .then(({data}) => dispatch(loadFavoriteMovies(data)))
+);
+
+export const addToFavorites = (id, status) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${id}/${status}`, {id, status})
+    .then(() => dispatch(fetchFavoriteMovies()))
+);
 
 export const fetchPromoMovie = () => (dispatch, _getState, api) => {
   api.get(`/films/promo`)
@@ -39,7 +49,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const fetchReviews = (id) => (dispatch, _getState, api) => (
   api.get(`/comments/${id}`)
     .then(({data})=> dispatch(loadReviews(data)))
-    .catch()
+    .catch(() => {})
 );
 
 export const addReview = (id, rating, comment) => (dispatch, _getState, api) => (

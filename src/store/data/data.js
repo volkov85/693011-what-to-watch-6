@@ -12,10 +12,18 @@ const initialState = {
   filmByIdLoaded: false,
   reviewsById: [],
   reviewsByIdLoaded: false,
+  favoriteFilms: [],
+  isFavoriteLoaded: false
 };
 
 const data = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.LOAD_FAVORITE_MOVIES:
+      return {
+        ...state,
+        favoriteFilms: action.payload,
+        isFavoriteLoaded: true
+      };
     case ActionType.CHANGE_GENRE:
       return {
         ...state,
