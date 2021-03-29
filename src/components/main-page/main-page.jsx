@@ -14,7 +14,6 @@ import {Link} from 'react-router-dom';
 const MainPage = ({films, isDataLoaded, onLoadData, moviePromo, handleAddToFavoriteClick}) => {
   const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
   const handleShowMoreClick = () => setFilmsCount((currentCount) => currentCount + MAIN_PAGE_FILMS_COUNT);
-  const isMyList = false;
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -37,7 +36,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, moviePromo, handleAddToFavor
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header isMyList={isMyList}/>
+        <Header />
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">

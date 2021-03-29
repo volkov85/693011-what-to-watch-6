@@ -14,7 +14,6 @@ import {getAuthorizationStatus} from '../../store/user/selectors';
 const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus, handleAddToFavoriteClick}) => {
   const {id} = useParams();
   const film = films.find((item) => item.id === parseInt(id, 10));
-  const isMyList = false;
 
   useEffect(() => {
     if (!filmByIdLoaded || filmById.id !== id) {
@@ -38,7 +37,7 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header isMylist={isMyList}/>
+          <Header />
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
