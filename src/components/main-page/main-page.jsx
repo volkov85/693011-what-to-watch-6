@@ -59,7 +59,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, moviePromo, handleAddToFavor
                   <span>Play</span>
                 </Link>
                 <button className="btn btn--list movie-card__button" type="button" onClick={() => {
-                  handleAddToFavoriteClick(moviePromo.id, Number(!moviePromo.isFavorite));
+                  handleAddToFavoriteClick(moviePromo.id, Number(!moviePromo.is_favorite));
                 }}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"/>
