@@ -11,3 +11,4 @@ export const getReviewsById = (state) => state[NameSpace.DATA].reviewsById;
 export const getReviewsByIdStatus = (state) => state[NameSpace.DATA].reviewsByIdLoaded;
 export const getFavoriteMovies = (state) => state[NameSpace.DATA].favoriteFilms;
 export const getFavoriteLoadStatus = (state) => state[NameSpace.DATA].isFavoriteLoaded;
+export const getReviewFormDisabled = (state) => state[NameSpace.DATA].isReviewFormDisabled;

@@ -1,8 +1,11 @@
 import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {ReviewLength} from "../../const";
+import {getReviewFormDisabled} from "../../store/data/selectors";
+import {addReview} from "../../store/api-actions";
 
-const AddReviewForm = ({onSubmit}) => {
+const AddReviewForm = ({handlePostReview, id, isReviewFormDisabled}) => {
   const [review, setReview] = useState(``);
   const [rating, setRating] = useState(5);
 
@@ -10,7 +13,7 @@ const AddReviewForm = ({onSubmit}) => {
 
   const handleSubmitClick = (evt) => {
     evt.preventDefault();
-    onSubmit(rating, review);
+    handlePostReview(id, rating, review);
   };
 
   const stars = new Array(10).fill().map((el, index) =>
@@ -22,6 +25,7 @@ const AddReviewForm = ({onSubmit}) => {
         value={index + 1}
         checked={index + 1 === rating}
         onChange={() => setRating(index + 1)}
+        disabled={isReviewFormDisabled}
       />
       <label className="rating__label" htmlFor={`star-${index}`}>Rating {index + 1} </label>
     </Fragment>
@@ -42,9 +46,10 @@ const AddReviewForm = ({onSubmit}) => {
             id="review"
             placeholder="Review text"
             value={review}
+            disabled={isReviewFormDisabled}
             onChange={(evt) => setReview(evt.target.value)}/>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" disabled={isDisabled}>Post</button>
+            <button className="add-review__btn" type="submit" disabled={isDisabled || isReviewFormDisabled}>Post</button>
           </div>
         </div>
       </form>
@@ -53,7 +58,20 @@ const AddReviewForm = ({onSubmit}) => {
 };
 
 AddReviewForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  handlePostReview: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  isReviewFormDisabled: PropTypes.bool.isRequired
 };
 
-export default AddReviewForm;
+const mapStateToProps = (state) => ({
+  isReviewFormDisabled: getReviewFormDisabled(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handlePostReview(id, rating, review) {
+    dispatch(addReview(id, rating, review));
+  }
+});
+
+export {AddReviewForm};
+export default connect(mapStateToProps, mapDispatchToProps)(AddReviewForm);
