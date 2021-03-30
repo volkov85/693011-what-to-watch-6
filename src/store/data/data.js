@@ -14,7 +14,8 @@ const initialState = {
   reviewsByIdLoaded: false,
   favoriteFilms: [],
   isFavoriteLoaded: false,
-  isReviewFormDisabled: false
+  isReviewFormDisabled: false,
+  reviewFormError: ``
 };
 
 const data = (state = initialState, action) => {
@@ -68,6 +69,11 @@ const data = (state = initialState, action) => {
       return {
         ...state,
         isReviewFormDisabled: action.payload,
+      };
+    case ActionType.REVIEW_FORM_ERROR:
+      return {
+        ...state,
+        reviewFormError: action.payload,
       };
     default: return state;
   }

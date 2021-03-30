@@ -2,10 +2,10 @@ import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {ReviewLength} from "../../const";
-import {getReviewFormDisabled} from "../../store/data/selectors";
+import {getReviewFormDisabled, getReviewFormError} from "../../store/data/selectors";
 import {addReview} from "../../store/api-actions";
 
-const AddReviewForm = ({handlePostReview, id, isReviewFormDisabled}) => {
+const AddReviewForm = ({handlePostReview, id, isReviewFormDisabled, reviewFormError}) => {
   const [review, setReview] = useState(``);
   const [rating, setRating] = useState(5);
 
@@ -52,6 +52,7 @@ const AddReviewForm = ({handlePostReview, id, isReviewFormDisabled}) => {
             <button className="add-review__btn" type="submit" disabled={isDisabled || isReviewFormDisabled}>Post</button>
           </div>
         </div>
+        { (reviewFormError !== ``) ? <p>You can not post review. Error - {`${reviewFormError}`}</p> : ``}
       </form>
     </>
   );
@@ -60,11 +61,13 @@ const AddReviewForm = ({handlePostReview, id, isReviewFormDisabled}) => {
 AddReviewForm.propTypes = {
   handlePostReview: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  isReviewFormDisabled: PropTypes.bool.isRequired
+  isReviewFormDisabled: PropTypes.bool.isRequired,
+  reviewFormError: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-  isReviewFormDisabled: getReviewFormDisabled(state)
+  isReviewFormDisabled: getReviewFormDisabled(state),
+  reviewFormError: getReviewFormError(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
