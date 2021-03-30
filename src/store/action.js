@@ -7,6 +7,8 @@ export const ActionType = {
   LOAD_MOVIE: `data/loadMovie`,
   LOAD_REVIEWS: `data/loadReviews`,
   LOAD_FAVORITE_MOVIES: `data/loadFavoriteMovies`,
+  REVIEW_FORM_ERROR: `data/onReviewFormError`,
+  SET_REVIEW_FORM_DISABLED: `data/setReviewFormDisabled`,
   REQUIRE_AUTHORIZATION: `user/requiredAuthorization`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
   GET_USER_INFO: `user/getUserInfo`
@@ -63,4 +65,14 @@ export const redirectToRoute = (url) => ({
 export const getUserInfo = (userInfo) => ({
   type: ActionType.GET_USER_INFO,
   payload: userInfo,
+});
+
+export const onReviewFormError = (errorReview) => ({
+  type: ActionType.REVIEW_FORM_ERROR,
+  payload: errorReview,
+});
+
+export const setReviewFormDisabled = (disabled) => ({
+  type: ActionType.SET_REVIEW_FORM_DISABLED,
+  payload: disabled,
 });
