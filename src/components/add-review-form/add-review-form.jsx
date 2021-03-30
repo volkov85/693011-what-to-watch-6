@@ -1,13 +1,19 @@
 import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {ReviewLength} from "../../const";
+import {getReviewFormDisabled, getReviewFormError} from "../../store/data/selectors";
+import {addReview} from "../../store/api-actions";
 
-const AddReviewForm = ({onSubmit}) => {
+const AddReviewForm = ({handlePostReview, id, isReviewFormDisabled, reviewFormError}) => {
   const [review, setReview] = useState(``);
   const [rating, setRating] = useState(5);
 
+  const isDisabled = (review.toString().length < ReviewLength.MIN || review.toString().length > ReviewLength.MAX);
+
   const handleSubmitClick = (evt) => {
     evt.preventDefault();
-    onSubmit(rating, review);
+    handlePostReview(id, rating, review);
   };
 
   const stars = new Array(10).fill().map((el, index) =>
@@ -19,6 +25,7 @@ const AddReviewForm = ({onSubmit}) => {
         value={index + 1}
         checked={index + 1 === rating}
         onChange={() => setRating(index + 1)}
+        disabled={isReviewFormDisabled}
       />
       <label className="rating__label" htmlFor={`star-${index}`}>Rating {index + 1} </label>
     </Fragment>
@@ -33,18 +40,41 @@ const AddReviewForm = ({onSubmit}) => {
           </div>
         </div>
         <div className="add-review__text">
-          <textarea className="add-review__textarea" name="review" id="review" placeholder="Review text" value={review} onChange={(evt) => setReview(evt.target.value)}/>
+          <textarea
+            className="add-review__textarea"
+            name="review"
+            id="review"
+            placeholder="Review text"
+            value={review}
+            disabled={isReviewFormDisabled}
+            onChange={(evt) => setReview(evt.target.value)}/>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button className="add-review__btn" type="submit" disabled={isDisabled || isReviewFormDisabled}>Post</button>
           </div>
         </div>
+        { (reviewFormError !== ``) ? <p>You can not post review. Error - {`${reviewFormError}`}</p> : ``}
       </form>
     </>
   );
 };
 
 AddReviewForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  handlePostReview: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  isReviewFormDisabled: PropTypes.bool.isRequired,
+  reviewFormError: PropTypes.string
 };
 
-export default AddReviewForm;
+const mapStateToProps = (state) => ({
+  isReviewFormDisabled: getReviewFormDisabled(state),
+  reviewFormError: getReviewFormError(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handlePostReview(id, rating, review) {
+    dispatch(addReview(id, rating, review));
+  }
+});
+
+export {AddReviewForm};
+export default connect(mapStateToProps, mapDispatchToProps)(AddReviewForm);

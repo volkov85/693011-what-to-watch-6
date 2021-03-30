@@ -1,4 +1,4 @@
-import {loadMovies, loadFavoriteMovies, loadPromoMovie, loadMovie, getUserInfo, requireAuthorization, redirectToRoute, loadReviews} from './action';
+import {loadMovies, loadFavoriteMovies, loadPromoMovie, loadMovie, getUserInfo, requireAuthorization, redirectToRoute, loadReviews, onReviewFormError, setReviewFormDisabled} from './action';
 import {AuthorizationStatus} from '../const';
 import browserHistory from "../browser-history";
 
@@ -15,6 +15,9 @@ export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
 export const addToFavorites = (id, status) => (dispatch, _getState, api) => (
   api.post(`/favorite/${id}/${status}`, {id, status})
     .then(() => dispatch(fetchFavoriteMovies()))
+    .then(() => dispatch(fetchPromoMovie()))
+    .then(() => dispatch(redirectToRoute(`/mylist`)))
+    .catch(() => dispatch(redirectToRoute(`/mylist`)))
 );
 
 export const fetchPromoMovie = () => (dispatch, _getState, api) => {
@@ -52,10 +55,19 @@ export const fetchReviews = (id) => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
-export const addReview = (id, rating, comment) => (dispatch, _getState, api) => (
+export const addReview = (id, rating, comment) => (dispatch, _getState, api) => {
+  dispatch(setReviewFormDisabled(true));
+
   api.post(`/comments/${id}`, {rating, comment})
-    .then(() => dispatch(redirectToRoute(`/films/${id}`)))
-);
+    .then(() => {
+      dispatch(redirectToRoute(`/films/${id}`));
+      dispatch(setReviewFormDisabled(false));
+    })
+    .catch((err) => {
+      dispatch(onReviewFormError(err));
+      dispatch(setReviewFormDisabled(false));
+    });
+};
 
 export const logout = () => (dispatch, _getState, api) => (
   api.get(`/logout`)

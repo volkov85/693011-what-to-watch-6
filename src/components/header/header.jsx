@@ -6,7 +6,7 @@ import {AuthorizationStatus} from '../../const';
 import {logout} from '../../store/api-actions';
 import {getUserInfo, getAuthorizationStatus} from '../../store/user/selectors';
 
-const Header = ({userInfo, authorizationStatus, handleLogoutClick, isMyList}) => {
+const Header = ({userInfo, authorizationStatus, handleLogoutClick, isMyList = false}) => {
   return (
     <header className="page-header user-page__head">
       <div className="logo">
@@ -46,7 +46,7 @@ Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   userInfo: PropTypes.object,
   handleLogoutClick: PropTypes.func.isRequired,
-  isMyList: PropTypes.bool.isRequired
+  isMyList: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
