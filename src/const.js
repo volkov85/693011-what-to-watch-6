@@ -25,6 +25,11 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`
 };
 
+export const ReviewLength = {
+  MIN: 50,
+  MAX: 400
+};
+
 const MAIN_PAGE_FILMS_COUNT = 8;
 const MOVIE_PAGE_FILMS_COUNT = 4;
 const FILTER_ALL_GENRES = `All genres`;

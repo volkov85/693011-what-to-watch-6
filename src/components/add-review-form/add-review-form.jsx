@@ -1,9 +1,12 @@
 import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
+import {ReviewLength} from "../../const";
 
 const AddReviewForm = ({onSubmit}) => {
   const [review, setReview] = useState(``);
   const [rating, setRating] = useState(5);
+
+  const isDisabled = (review.toString().length < ReviewLength.MIN || review.toString().length > ReviewLength.MAX);
 
   const handleSubmitClick = (evt) => {
     evt.preventDefault();
@@ -33,9 +36,15 @@ const AddReviewForm = ({onSubmit}) => {
           </div>
         </div>
         <div className="add-review__text">
-          <textarea className="add-review__textarea" name="review" id="review" placeholder="Review text" value={review} onChange={(evt) => setReview(evt.target.value)}/>
+          <textarea
+            className="add-review__textarea"
+            name="review"
+            id="review"
+            placeholder="Review text"
+            value={review}
+            onChange={(evt) => setReview(evt.target.value)}/>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button className="add-review__btn" type="submit" disabled={isDisabled}>Post</button>
           </div>
         </div>
       </form>
