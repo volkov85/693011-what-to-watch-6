@@ -10,8 +10,9 @@ import {fetchMovies, fetchPromoMovie, addToFavorites} from "../../store/api-acti
 import Header from '../header/header';
 import {getFilms, getDataStatus, getMoviePromo} from '../../store/data/selectors';
 import {Link} from 'react-router-dom';
+import AddToMylistButton from "../add-to-mylist-button/add-to-mylist-button";
 
-const MainPage = ({films, isDataLoaded, onLoadData, moviePromo, handleAddToFavoriteClick}) => {
+const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
   const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
   const handleShowMoreClick = () => setFilmsCount((currentCount) => currentCount + MAIN_PAGE_FILMS_COUNT);
 
@@ -58,14 +59,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, moviePromo, handleAddToFavor
                   </svg>
                   <span>Play</span>
                 </Link>
-                <button className="btn btn--list movie-card__button" type="button" onClick={() => {
-                  handleAddToFavoriteClick(moviePromo.id, Number(!moviePromo.is_favorite));
-                }}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"/>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <AddToMylistButton movie={moviePromo}/>
               </div>
             </div>
           </div>

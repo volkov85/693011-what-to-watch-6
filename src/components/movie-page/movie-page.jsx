@@ -10,8 +10,9 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header/header';
 import {getFilms, getFilmById, getFilmByIdStatus} from '../../store/data/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
+import AddToMylistButton from "../add-to-mylist-button/add-to-mylist-button";
 
-const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus, handleAddToFavoriteClick}) => {
+const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus}) => {
   const {id} = useParams();
   const film = films.find((item) => item.id === parseInt(id, 10));
 
@@ -54,14 +55,8 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
                   </svg>
                   <span>Play</span>
                 </Link>
-                <button className="btn btn--list movie-card__button" type="button" onClick={() => {
-                  handleAddToFavoriteClick(filmById.id, Number(!filmById.is_favorite));
-                }}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"/>
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                <AddToMylistButton movie={filmById}/>
                 {authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link> : ``}
               </div>
             </div>

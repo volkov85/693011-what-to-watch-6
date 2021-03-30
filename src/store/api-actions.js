@@ -15,6 +15,7 @@ export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
 export const addToFavorites = (id, status) => (dispatch, _getState, api) => (
   api.post(`/favorite/${id}/${status}`, {id, status})
     .then(() => dispatch(fetchFavoriteMovies()))
+    .then(() => dispatch(fetchPromoMovie()))
     .then(() => dispatch(redirectToRoute(`/mylist`)))
     .catch(() => dispatch(redirectToRoute(`/mylist`)))
 );
