@@ -8,7 +8,6 @@ import {PLAYER_BACKGROUND_COLOR} from "../../const";
 
 const PlayerPage = ({films}) => {
   const [isPlay, setIsPlay] = useState(false);
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const [progressBarValue, setProgressBarValue] = useState(0);
   const [timeLeft, setTimeLeft] = useState(` `);
   const videoRef = useRef();
@@ -30,13 +29,7 @@ const PlayerPage = ({films}) => {
   };
 
   const handleFullScreenButtonClick = () => {
-    if (!isFullScreen) {
-      videoRef.current.requestFullscreen();
-      setIsFullScreen(true);
-    } else {
-      videoRef.current.exitFullscreen();
-      setIsFullScreen(false);
-    }
+    videoRef.current.requestFullscreen();
   };
 
   const handleProgressBarUpdate = () => {
