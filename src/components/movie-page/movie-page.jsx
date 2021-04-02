@@ -2,19 +2,18 @@ import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {MOVIE_PAGE_FILMS_COUNT, AuthorizationStatus} from '../../const';
+import {AuthorizationStatus} from '../../const';
 import {fetchMovie, addToFavorites} from '../../store/api-actions';
 import MovieTabs from '../movie-tabs/movie-tabs';
-import MovieList from '../movie-list/movie-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header/header';
-import {getFilms, getFilmById, getFilmByIdStatus} from '../../store/data/selectors';
+import {getFilmById, getFilmByIdStatus} from '../../store/data/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 import AddToMylistButton from "../add-to-mylist-button/add-to-mylist-button";
+import MoreLikeThis from '../more-like-this/more-like-this';
 
-const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus}) => {
+const MoviePage = ({filmById, filmByIdLoaded, onLoadFilmById, authorizationStatus}) => {
   const {id} = useParams();
-  const film = films.find((item) => item.id === parseInt(id, 10));
 
   useEffect(() => {
     if (!filmByIdLoaded || filmById.id !== id) {
@@ -57,7 +56,7 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
                 </Link>
 
                 <AddToMylistButton movie={filmById}/>
-                {authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${film.id}/review`} className="btn movie-card__button">Add review</Link> : ``}
+                {authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${filmById.id}/review`} className="btn movie-card__button">Add review</Link> : ``}
               </div>
             </div>
           </div>
@@ -80,12 +79,8 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
 
-          <MovieList films = {films.filter((item) => item.genre === film.genre).slice(0, MOVIE_PAGE_FILMS_COUNT)} />
-
-        </section>
+        <MoreLikeThis id={id} />
 
         <footer className="page-footer">
           <div className="logo">
@@ -106,7 +101,6 @@ const MoviePage = ({films, filmById, filmByIdLoaded, onLoadFilmById, authorizati
 };
 
 MoviePage.propTypes = {
-  films: PropTypes.array.isRequired,
   filmById: PropTypes.object.isRequired,
   filmByIdLoaded: PropTypes.bool.isRequired,
   onLoadFilmById: PropTypes.func.isRequired,
@@ -115,7 +109,6 @@ MoviePage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: getFilms(state),
   filmById: getFilmById(state),
   filmByIdLoaded: getFilmByIdStatus(state),
   authorizationStatus: getAuthorizationStatus(state)
