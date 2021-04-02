@@ -6,13 +6,11 @@ import MovieList from '../movie-list/movie-list';
 import GenreList from '../genre-list/genre-list';
 import LoadingScreen from '../loading-screen/loading-screen';
 import ShowMore from '../show-more/show-more';
-import {fetchMovies, fetchPromoMovie, addToFavorites} from "../../store/api-actions";
-import Header from '../header/header';
-import {getFilms, getDataStatus, getMoviePromo} from '../../store/data/selectors';
-import {Link} from 'react-router-dom';
-import AddToMylistButton from "../add-to-mylist-button/add-to-mylist-button";
+import {fetchMovies, addToFavorites} from "../../store/api-actions";
+import {getFilms, getDataStatus} from '../../store/data/selectors';
+import MoviePromo from '../movie-promo/movie-promo';
 
-const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
+const MainPage = ({films, isDataLoaded, onLoadData}) => {
   const [filmsCount, setFilmsCount] = useState(MAIN_PAGE_FILMS_COUNT);
   const handleShowMoreClick = () => setFilmsCount((currentCount) => currentCount + MAIN_PAGE_FILMS_COUNT);
 
@@ -30,41 +28,7 @@ const MainPage = ({films, isDataLoaded, onLoadData, moviePromo}) => {
 
   return (
     <>
-      <section className="movie-card">
-        <div className="movie-card__bg">
-          <img src={moviePromo.background_image} alt={moviePromo.name}/>
-        </div>
-
-        <h1 className="visually-hidden">WTW</h1>
-
-        <Header />
-
-        <div className="movie-card__wrap">
-          <div className="movie-card__info">
-            <div className="movie-card__poster">
-              <img src={moviePromo.poster_image} alt={moviePromo.name} width="218" height="327"/>
-            </div>
-
-            <div className="movie-card__desc">
-              <h2 className="movie-card__title">{moviePromo.name}</h2>
-              <p className="movie-card__meta">
-                <span className="movie-card__genre">{moviePromo.genre}</span>
-                <span className="movie-card__year">{moviePromo.released}</span>
-              </p>
-
-              <div className="movie-card__buttons">
-                <Link to={`/player/${moviePromo.id}`} className="btn btn--play movie-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"/>
-                  </svg>
-                  <span>Play</span>
-                </Link>
-                <AddToMylistButton movie={moviePromo}/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <MoviePromo />
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
@@ -97,20 +61,17 @@ MainPage.propTypes = {
   films: PropTypes.array.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  moviePromo: PropTypes.object.isRequired,
   handleAddToFavoriteClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   films: getFilms(state),
-  isDataLoaded: getDataStatus(state),
-  moviePromo: getMoviePromo(state)
+  isDataLoaded: getDataStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchMovies());
-    dispatch(fetchPromoMovie());
   },
   handleAddToFavoriteClick(id, status) {
     dispatch(addToFavorites(id, status));
