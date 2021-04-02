@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {useParams, useHistory} from 'react-router-dom';
 import {getFilms} from '../../store/data/selectors';
 import {getTimeLeft} from "../../utils/utils";
+import {PLAYER_BACKGROUND_COLOR} from "../../const";
 
 const PlayerPage = ({films}) => {
   const [isPlay, setIsPlay] = useState(false);
@@ -44,7 +45,7 @@ const PlayerPage = ({films}) => {
   };
 
   return (
-    <div className="player">
+    <div className="player" style={{backgroundColor: PLAYER_BACKGROUND_COLOR}}>
       <video
         src={`${film.video_link}`}
         ref={videoRef}
