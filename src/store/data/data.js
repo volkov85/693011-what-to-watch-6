@@ -8,6 +8,7 @@ const initialState = {
   films: [],
   moviePromo: {},
   isDataLoaded: false,
+  isPromoLoaded: false,
   filmById: {},
   filmByIdLoaded: false,
   reviewsById: [],
@@ -64,6 +65,7 @@ const data = (state = initialState, action) => {
       return {
         ...state,
         moviePromo: action.payload,
+        isPromoLoaded: true
       };
     case ActionType.SET_REVIEW_FORM_DISABLED:
       return {
