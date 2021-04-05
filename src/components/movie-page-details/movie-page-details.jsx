@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {v4 as uniqueKey} from 'uuid';
 
 const MoviePageDetails = ({genre, released, director, starring, runTime}) => {
   const correctRunTime = (incorrectTime) => {
@@ -16,7 +17,7 @@ const MoviePageDetails = ({genre, released, director, starring, runTime}) => {
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Starring</strong>
           <span className="movie-card__details-value">
-            {starring.map((item, index) => <React.Fragment key={`${item}${index}`}>{item}{<br />}</React.Fragment>)}
+            {starring.map((item) => <React.Fragment key={uniqueKey()}>{item}{<br />}</React.Fragment>)}
           </span>
         </p>
       </div>

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {ReviewLength} from "../../const";
 import {getReviewFormDisabled, getReviewFormError} from "../../store/data/selectors";
 import {addReview} from "../../store/api-actions";
+import {RATING_STARS_NUMBER} from "../../const";
 
 const AddReviewForm = ({handlePostReview, id, isReviewFormDisabled, reviewFormError}) => {
   const [review, setReview] = useState(``);
@@ -16,18 +17,20 @@ const AddReviewForm = ({handlePostReview, id, isReviewFormDisabled, reviewFormEr
     handlePostReview(id, rating, review);
   };
 
-  const stars = new Array(10).fill().map((el, index) =>
-    <Fragment key={`star-${index}`}>
+  const starsFiller = new Array(RATING_STARS_NUMBER).fill(``).map((item, index)=>index);
+
+  const stars = starsFiller.map((item) =>
+    <Fragment key={item}>
       <input
         className="rating__input"
-        id={`star-${index}`}
+        id={`star-${item}`}
         type="radio" name="rating"
-        value={index + 1}
-        checked={index + 1 === rating}
-        onChange={() => setRating(index + 1)}
+        value={item + 1}
+        checked={item + 1 === rating}
+        onChange={() => setRating(item + 1)}
         disabled={isReviewFormDisabled}
       />
-      <label className="rating__label" htmlFor={`star-${index}`}>Rating {index + 1} </label>
+      <label className="rating__label" htmlFor={`star-${item}`}>Rating {item + 1} </label>
     </Fragment>
   );
 

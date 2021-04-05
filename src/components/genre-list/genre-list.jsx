@@ -9,8 +9,8 @@ const GenreList = ({genres, selectedGenre, handleSelectGenre}) => {
   return (
     <ul className="catalog__genres-list">
       {
-        genres.map((item, index) => (
-          <li key={`genre-${index}`} className={`catalog__genres-item ${item === selectedGenre ? `catalog__genres-item--active` : ``}`}>
+        genres.map((item) => (
+          <li key={item} className={`catalog__genres-item ${item === selectedGenre ? `catalog__genres-item--active` : ``}`}>
             <a href="#" className="catalog__genres-link"
               onClick={(evt) => {
                 evt.preventDefault();
